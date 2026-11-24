@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as HabilidadesRouteImport } from './routes/habilidades'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProjetosRouteImport } from './routes/projetos'
 import { Route as SobreRouteImport } from './routes/sobre'
 
@@ -25,9 +27,19 @@ const ContatoRoute = ContatoRouteImport.update({
   path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HabilidadesRoute = HabilidadesRouteImport.update({
   id: '/habilidades',
   path: '/habilidades',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjetosRoute = ProjetosRouteImport.update({
@@ -44,14 +56,18 @@ const SobreRoute = SobreRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contato': typeof ContatoRoute
+  '/dashboard': typeof DashboardRoute
   '/habilidades': typeof HabilidadesRoute
+  '/login': typeof LoginRoute
   '/projetos': typeof ProjetosRoute
   '/sobre': typeof SobreRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contato': typeof ContatoRoute
+  '/dashboard': typeof DashboardRoute
   '/habilidades': typeof HabilidadesRoute
+  '/login': typeof LoginRoute
   '/projetos': typeof ProjetosRoute
   '/sobre': typeof SobreRoute
 }
@@ -59,22 +75,48 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contato': typeof ContatoRoute
+  '/dashboard': typeof DashboardRoute
   '/habilidades': typeof HabilidadesRoute
+  '/login': typeof LoginRoute
   '/projetos': typeof ProjetosRoute
   '/sobre': typeof SobreRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contato' | '/habilidades' | '/projetos' | '/sobre'
+  fullPaths:
+    | '/'
+    | '/contato'
+    | '/dashboard'
+    | '/habilidades'
+    | '/login'
+    | '/projetos'
+    | '/sobre'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contato' | '/habilidades' | '/projetos' | '/sobre'
-  id: '__root__' | '/' | '/contato' | '/habilidades' | '/projetos' | '/sobre'
+  to:
+    | '/'
+    | '/contato'
+    | '/dashboard'
+    | '/habilidades'
+    | '/login'
+    | '/projetos'
+    | '/sobre'
+  id:
+    | '__root__'
+    | '/'
+    | '/contato'
+    | '/dashboard'
+    | '/habilidades'
+    | '/login'
+    | '/projetos'
+    | '/sobre'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContatoRoute: typeof ContatoRoute
+  DashboardRoute: typeof DashboardRoute
   HabilidadesRoute: typeof HabilidadesRoute
+  LoginRoute: typeof LoginRoute
   ProjetosRoute: typeof ProjetosRoute
   SobreRoute: typeof SobreRoute
 }
@@ -95,11 +137,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/habilidades': {
       id: '/habilidades'
       path: '/habilidades'
       fullPath: '/habilidades'
       preLoaderRoute: typeof HabilidadesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projetos': {
@@ -122,7 +178,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContatoRoute: ContatoRoute,
+  DashboardRoute: DashboardRoute,
   HabilidadesRoute: HabilidadesRoute,
+  LoginRoute: LoginRoute,
   ProjetosRoute: ProjetosRoute,
   SobreRoute: SobreRoute,
 }

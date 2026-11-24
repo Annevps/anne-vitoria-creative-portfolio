@@ -78,36 +78,44 @@ function ProjetosPage() {
   const repoCount = data.projects.filter((p) => p.repoUrl).length;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-12 pb-16 sm:px-6 md:pt-18">
-      <Reveal className="max-w-3xl">
-        <p className="font-mono text-xs text-primary">~/projetos</p>
-        <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-          Ideias que viram <span className="text-primary">produtos reais</span>.
-        </h1>
-        <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
-          Alterne entre a visão de resultado para clientes e os detalhes técnicos de engenharia.
-          Projetos publicados no painel administrativo aparecem automaticamente aqui.
-        </p>
-      </Reveal>
+    <div>
+      <section className="hero-petrol relative overflow-hidden py-16 md:py-20">
+        <div className="bg-cyan-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden="true" />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+          <Reveal className="max-w-3xl">
+            <p className="font-mono text-xs uppercase tracking-widest text-cyan-glow">
+              Portfólio · Desenvolvimento
+            </p>
+            <h1 className="mt-3 font-display text-4xl font-bold text-hero-foreground sm:text-5xl lg:text-6xl">
+              Ideias que ganham forma através da{" "}
+              <span className="text-cyan-glow">tecnologia</span>.
+            </h1>
+            <p className="mt-5 text-base leading-relaxed text-hero-muted sm:text-lg">
+              Uma seleção de projetos que desenvolvi, unindo criatividade, programação e atenção
+              aos detalhes. Projetos salvos no painel ADM aparecem automaticamente aqui.
+            </p>
+          </Reveal>
 
-      {/* Overview Stats */}
-      <Reveal className="mt-10 grid grid-cols-3 gap-4 sm:max-w-xl">
-        <div className="card-surface rounded-2xl p-4">
-          <p className="font-display text-2xl font-bold text-foreground">{data.projects.length}</p>
-          <p className="mt-0.5 text-xs text-muted-foreground">projetos no portfólio</p>
+          <Reveal className="mt-10 grid grid-cols-3 gap-4 sm:max-w-xl">
+            <div className="rounded-2xl border border-cyan-glow/20 bg-hero-surface/60 p-4">
+              <p className="font-display text-2xl font-bold text-hero-foreground">{data.projects.length}</p>
+              <p className="mt-0.5 text-xs text-hero-muted">projetos no portfólio</p>
+            </div>
+            <div className="rounded-2xl border border-cyan-glow/20 bg-hero-surface/60 p-4">
+              <p className="font-display text-2xl font-bold text-cyan-glow">{CATEGORIES.length - 1}</p>
+              <p className="mt-0.5 text-xs text-hero-muted">áreas atendidas</p>
+            </div>
+            <div className="rounded-2xl border border-cyan-glow/20 bg-hero-surface/60 p-4">
+              <p className="font-display text-2xl font-bold text-mint">{repoCount}</p>
+              <p className="mt-0.5 text-xs text-hero-muted">códigos disponíveis</p>
+            </div>
+          </Reveal>
         </div>
-        <div className="card-surface rounded-2xl p-4">
-          <p className="font-display text-2xl font-bold text-primary">{CATEGORIES.length - 1}</p>
-          <p className="mt-0.5 text-xs text-muted-foreground">áreas atendidas</p>
-        </div>
-        <div className="card-surface rounded-2xl p-4">
-          <p className="font-display text-2xl font-bold text-accent">{repoCount}</p>
-          <p className="mt-0.5 text-xs text-muted-foreground">códigos disponíveis</p>
-        </div>
-      </Reveal>
+      </section>
 
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
       {/* Controls: View Mode + Search + Categories */}
-      <div className="mt-10 flex flex-col gap-5 rounded-3xl border border-border bg-surface/60 p-5 sm:p-6">
+      <div className="editorial-card flex flex-col gap-5 rounded-3xl p-5 sm:p-6">
         <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
           <div
             className="inline-flex w-fit rounded-full border border-border bg-background/70 p-1"
@@ -204,19 +212,19 @@ function ProjetosPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ duration: 0.35 }}
-                className="card-surface group flex flex-col overflow-hidden rounded-2xl"
+                className="editorial-card group flex flex-col overflow-hidden rounded-3xl"
               >
                 <button
                   type="button"
                   onClick={() => setActiveProject(project)}
-                  className="relative aspect-[16/10] w-full overflow-hidden bg-surface text-left"
+                  className="relative aspect-[16/10] w-full overflow-hidden bg-hero text-left"
                 >
                   <img
                     src={project.image}
                     alt={`Prévia do projeto ${project.title}`}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <span className="glass-pill absolute top-3 left-3 rounded-full px-3 py-1 font-mono text-[11px] text-primary">
+                  <span className="absolute top-3 left-3 rounded-full bg-hero/85 px-3 py-1 font-mono text-[11px] text-cyan-glow backdrop-blur-md">
                     {project.category}
                   </span>
                 </button>
@@ -271,7 +279,7 @@ function ProjetosPage() {
           </AnimatePresence>
         </motion.div>
       ) : (
-        <div className="card-surface mt-10 rounded-3xl p-10 text-center">
+        <div className="editorial-card mt-10 rounded-3xl p-10 text-center">
           <p className="font-display text-lg font-semibold text-foreground">
             Nenhum projeto encontrado
           </p>
@@ -299,7 +307,7 @@ function ProjetosPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setActiveProject(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-background/85 p-4 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-hero/80 p-4 backdrop-blur-md"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.96, y: 18 }}
@@ -310,13 +318,13 @@ function ProjetosPage() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="modal-project-title"
-              className="card-surface relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl"
+              className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-border bg-card shadow-2xl"
             >
               <button
                 type="button"
                 onClick={() => setActiveProject(null)}
                 aria-label="Fechar detalhes do projeto"
-                className="glass-pill absolute top-4 right-4 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full text-foreground hover:text-primary"
+                className="absolute top-4 right-4 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-hero/85 text-hero-foreground hover:text-cyan-glow"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -374,7 +382,7 @@ function ProjetosPage() {
                     href={whatsappHref(`Olá Anne! Vi o projeto "${activeProject.title}" no seu portfólio e quero algo nesse nível.`)}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground"
+                    className="btn-ocean inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold"
                   >
                     <MessageCircle className="h-4 w-4" />
                     Quero um projeto assim
@@ -407,6 +415,7 @@ function ProjetosPage() {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
     </div>
   );
 }

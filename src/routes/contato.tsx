@@ -103,51 +103,57 @@ function ContatoPage() {
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-12 pb-16 sm:px-6 md:pt-18">
-      <Reveal className="max-w-3xl">
-        <p className="font-mono text-xs text-primary">~/contato</p>
-        <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-          Vamos construir algo <span className="text-primary">profissional</span> juntos?
-        </h1>
-        <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
-          Escolha o canal que preferir ou envie os detalhes da sua ideia pelo formulário. Retorno
-          rapidamente com uma proposta clara.
-        </p>
-      </Reveal>
+    <div>
+      <section className="hero-petrol relative overflow-hidden py-16 md:py-20">
+        <div className="bg-cyan-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden="true" />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+          <Reveal className="max-w-3xl">
+            <p className="font-mono text-xs uppercase tracking-widest text-cyan-glow">Contato</p>
+            <h1 className="mt-3 font-display text-4xl font-bold text-hero-foreground sm:text-5xl">
+              Vamos construir algo <span className="text-cyan-glow">incrível juntos</span>?
+            </h1>
+            <p className="mt-5 text-base leading-relaxed text-hero-muted sm:text-lg">
+              Entre em contato para discutir novas oportunidades, parcerias ou projetos sob medida.
+              Atendimento remoto para todo o Brasil.
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
-      <div className="mt-12 grid gap-8 lg:grid-cols-12">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <div className="grid gap-8 lg:grid-cols-12">
         {/* Direct Channels */}
         <Reveal className="space-y-4 lg:col-span-5">
           <a
             href={whatsappHref()}
             target="_blank"
             rel="noreferrer"
-            className="card-surface flex items-center justify-between gap-4 rounded-2xl p-5"
+            className="editorial-card flex items-center justify-between gap-4 rounded-2xl p-5"
           >
             <div className="flex items-center gap-4">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent/15 text-accent">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary text-primary">
                 <MessageCircle className="h-5 w-5" />
               </span>
               <div>
                 <p className="font-mono text-xs text-muted-foreground">WhatsApp direto</p>
-                <p className="mt-0.5 font-display text-base font-semibold text-foreground">
+                <p className="mt-0.5 font-display text-base font-bold text-foreground">
                   {PROFILE.whatsappDisplay}
                 </p>
               </div>
             </div>
-            <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
+            <span className="btn-ocean rounded-full px-3.5 py-1.5 text-xs font-semibold">
               Chamar
             </span>
           </a>
 
-          <div className="card-surface flex items-center justify-between gap-4 rounded-2xl p-5">
+          <div className="editorial-card flex items-center justify-between gap-4 rounded-2xl p-5">
             <a href={`mailto:${PROFILE.email}`} className="flex min-w-0 items-center gap-4">
-              <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
+              <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary text-primary">
                 <Mail className="h-5 w-5" />
               </span>
               <div className="min-w-0">
                 <p className="font-mono text-xs text-muted-foreground">E-mail profissional</p>
-                <p className="mt-0.5 truncate font-display text-sm font-semibold text-foreground sm:text-base">
+                <p className="mt-0.5 truncate font-display text-sm font-bold text-foreground sm:text-base">
                   {PROFILE.email}
                 </p>
               </div>
@@ -158,7 +164,7 @@ function ContatoPage() {
               aria-label="Copiar e-mail"
               className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
             >
-              {copiedEmail ? <Check className="h-4 w-4 text-accent" /> : <Copy className="h-4 w-4" />}
+              {copiedEmail ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
             </button>
           </div>
 
@@ -166,26 +172,26 @@ function ContatoPage() {
             href={PROFILE.githubUrl}
             target="_blank"
             rel="noreferrer"
-            className="card-surface flex items-center gap-4 rounded-2xl p-5"
+            className="editorial-card flex items-center gap-4 rounded-2xl p-5"
           >
             <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary text-foreground">
               <Github className="h-5 w-5" />
             </span>
             <div>
               <p className="font-mono text-xs text-muted-foreground">GitHub</p>
-              <p className="mt-0.5 font-display text-base font-semibold text-foreground">
+              <p className="mt-0.5 font-display text-base font-bold text-foreground">
                 github.com/Annevps
               </p>
             </div>
           </a>
 
-          <div className="card-surface flex items-center gap-4 rounded-2xl p-5">
-            <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+          <div className="editorial-card flex items-center gap-4 rounded-2xl p-5">
+            <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary text-primary">
               <Globe className="h-5 w-5" />
             </span>
             <div>
               <p className="font-mono text-xs text-muted-foreground">Região de atendimento</p>
-              <p className="mt-0.5 font-display text-base font-semibold text-foreground">
+              <p className="mt-0.5 font-display text-base font-bold text-foreground">
                 {PROFILE.location}
               </p>
             </div>
@@ -194,7 +200,7 @@ function ContatoPage() {
 
         {/* Quote Form */}
         <Reveal delay={0.1} className="lg:col-span-7">
-          <form onSubmit={handleSubmit} noValidate className="card-surface rounded-3xl p-6 sm:p-8">
+          <form onSubmit={handleSubmit} noValidate className="editorial-card rounded-3xl p-6 sm:p-8">
             <h2 className="font-display text-2xl font-bold text-foreground">
               Solicitar orçamento
             </h2>
@@ -271,13 +277,14 @@ function ContatoPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.01] disabled:opacity-60 sm:w-auto"
+              className="btn-ocean mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold disabled:opacity-60 sm:w-auto"
             >
               <Send className="h-4 w-4" />
               {submitting ? "Enviando..." : "Enviar mensagem"}
             </button>
           </form>
         </Reveal>
+      </div>
       </div>
     </div>
   );
