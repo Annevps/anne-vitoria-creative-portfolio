@@ -55,20 +55,29 @@ function HabilidadesPage() {
   const currentGroup = SKILL_GROUPS.find((g) => g.id === selectedId) ?? SKILL_GROUPS[0]!;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-12 pb-16 sm:px-6 md:pt-18">
-      <Reveal className="max-w-3xl">
-        <p className="font-mono text-xs text-primary">~/habilidades</p>
-        <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-          Domínio técnico de <span className="text-primary">ponta a ponta</span>.
-        </h1>
-        <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
-          Atuo em todas as camadas do desenvolvimento web — do banco de dados e APIs até interfaces
-          rápidas, acessíveis e desenhadas para impressionar clientes.
-        </p>
-      </Reveal>
+    <div>
+      <section className="hero-petrol relative overflow-hidden py-16 md:py-20">
+        <div className="bg-cyan-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden="true" />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+          <Reveal className="max-w-3xl">
+            <p className="font-mono text-xs uppercase tracking-widest text-cyan-glow">
+              Domínio técnico
+            </p>
+            <h1 className="mt-3 font-display text-4xl font-bold text-hero-foreground sm:text-5xl lg:text-6xl">
+              Habilidades de <span className="text-cyan-glow">ponta a ponta</span>.
+            </h1>
+            <p className="mt-5 text-base leading-relaxed text-hero-muted sm:text-lg">
+              Atuo em todas as camadas do desenvolvimento web — HTML5, CSS3, JavaScript,
+              TypeScript, React, Node.js, Python e MySQL — unindo arquitetura limpa a interfaces
+              modernas e otimizadas para o Google.
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       {/* Interactive Skill Category Tabs */}
-      <section className="mt-14">
+      <section>
         <div
           className="flex flex-wrap gap-2"
           role="tablist"
@@ -84,7 +93,9 @@ function HabilidadesPage() {
                 aria-selected={active}
                 onClick={() => setSelectedId(group.id)}
                 className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                  active ? "text-primary-foreground" : "border border-border text-muted-foreground hover:text-foreground"
+                  active
+                    ? "text-primary-foreground"
+                    : "border border-border bg-card text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {active && (
@@ -109,22 +120,22 @@ function HabilidadesPage() {
             transition={{ duration: 0.28 }}
             className="mt-8 grid gap-8 lg:grid-cols-12"
           >
-            <div className="card-surface flex flex-col justify-between rounded-3xl p-7 lg:col-span-5">
+            <div className="featured-petrol-card flex flex-col justify-between rounded-3xl p-7 lg:col-span-5">
               <div>
-                <span className="font-mono text-xs uppercase tracking-wider text-primary">
+                <span className="font-mono text-xs uppercase tracking-wider text-cyan-glow">
                   {currentGroup.label}
                 </span>
-                <h2 className="mt-3 font-display text-2xl font-bold text-foreground sm:text-3xl">
+                <h2 className="mt-3 font-display text-2xl font-bold text-hero-foreground sm:text-3xl">
                   {currentGroup.headline}
                 </h2>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-4 text-sm leading-relaxed text-hero-muted">
                   {currentGroup.description}
                 </p>
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   to="/projetos"
-                  className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-4 py-2 text-xs font-medium text-foreground transition-colors hover:border-primary/50 hover:text-primary"
+                  className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-hero/50 px-4 py-2 text-xs font-medium text-hero-foreground transition-colors hover:border-cyan-glow hover:text-cyan-glow"
                 >
                   Ver na prática
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -134,17 +145,17 @@ function HabilidadesPage() {
 
             <div className="space-y-4 lg:col-span-7">
               {currentGroup.skills.map((skill, idx) => (
-                <div key={skill.name} className="card-surface rounded-2xl p-5 sm:p-6">
+                <div key={skill.name} className="editorial-card rounded-2xl p-5 sm:p-6">
                   <div className="flex items-baseline justify-between gap-4">
-                    <h3 className="font-display text-base font-semibold text-foreground">
+                    <h3 className="font-display text-base font-bold text-foreground">
                       {skill.name}
                     </h3>
-                    <span className="font-mono text-xs font-medium text-primary">
+                    <span className="font-mono text-xs font-semibold text-primary">
                       {skill.level}%
                     </span>
                   </div>
                   <p className="mt-1.5 text-sm text-muted-foreground">{skill.detail}</p>
-                  <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+                  <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-secondary">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${skill.level}%` }}
@@ -162,7 +173,7 @@ function HabilidadesPage() {
       {/* PROCESS */}
       <section className="mt-24">
         <Reveal className="max-w-2xl">
-          <p className="font-mono text-xs uppercase tracking-widest text-primary">Processo</p>
+          <p className="font-mono text-xs font-semibold uppercase tracking-widest text-primary">Processo</p>
           <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             Como cada projeto sai da ideia até o ar
           </h2>
@@ -171,9 +182,9 @@ function HabilidadesPage() {
         <StaggerGroup className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {PROCESS_STEPS.map((item) => (
             <StaggerItem key={item.step}>
-              <div className="card-surface h-full rounded-2xl p-6">
+              <div className="editorial-card h-full rounded-2xl p-6">
                 <span className="font-mono text-sm font-semibold text-primary">{item.step}</span>
-                <h3 className="mt-3 font-display text-lg font-semibold text-foreground">
+                <h3 className="mt-3 font-display text-lg font-bold text-foreground">
                   {item.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
@@ -183,12 +194,12 @@ function HabilidadesPage() {
         </StaggerGroup>
       </section>
 
-      <Reveal className="mt-16 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-border bg-surface/60 p-7 sm:p-9">
+      <Reveal className="hero-petrol mt-16 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-cyan-glow/20 p-7 sm:p-9">
         <div>
-          <h2 className="font-display text-2xl font-bold text-foreground">
+          <h2 className="font-display text-2xl font-bold text-hero-foreground">
             Precisa dessa stack trabalhando no seu projeto?
           </h2>
-          <p className="mt-1.5 text-sm text-muted-foreground">
+          <p className="mt-1.5 text-sm text-hero-muted">
             Me conte sua ideia e eu desenho a solução ideal para o seu momento.
           </p>
         </div>
@@ -196,12 +207,13 @@ function HabilidadesPage() {
           href={whatsappHref("Olá Anne! Vi suas habilidades no portfólio e quero conversar sobre um projeto.")}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground transition-transform hover:scale-[1.03]"
+          className="btn-ocean inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"
         >
           <MessageCircle className="h-4 w-4" />
           Conversar no WhatsApp
         </a>
       </Reveal>
+      </div>
     </div>
   );
 }

@@ -63,33 +63,50 @@ const VALUES = [
 
 function SobrePage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-12 pb-16 sm:px-6 md:pt-18">
+    <div>
+      <section className="hero-petrol relative overflow-hidden py-16 md:py-20">
+        <div className="bg-cyan-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden="true" />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+          <Reveal className="max-w-3xl">
+            <p className="font-mono text-xs uppercase tracking-widest text-cyan-glow">Sobre mim</p>
+            <h1 className="mt-3 font-display text-4xl font-bold text-hero-foreground sm:text-5xl">
+              Desenvolvimento com propósito e <span className="text-cyan-glow">paixão por tecnologia</span>.
+            </h1>
+            <p className="mt-5 text-base leading-relaxed text-hero-muted sm:text-lg">
+              Sou especialista em transformar problemas complexos em interfaces limpas, intuitivas e
+              sistemas altamente funcionais.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+    <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div className="grid items-start gap-12 lg:grid-cols-12">
         <Reveal className="lg:col-span-7">
-          <p className="font-mono text-xs text-primary">~/sobre</p>
-          <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            Desenvolvimento com propósito e atenção <span className="text-primary">a cada detalhe</span>.
-          </h1>
-          <p className="mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Sou <strong className="font-semibold text-foreground">{PROFILE.fullName}</strong>,
-            desenvolvedora Full Stack apaixonada por transformar problemas reais em interfaces
-            elegantes e sistemas confiáveis.
+          <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+            Minha trajetória na tecnologia
+          </h2>
+          <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+            Minha trajetória na tecnologia é guiada pela busca constante de excelência técnica e
+            usabilidade refinada. Acredito que um bom código não é apenas aquele que funciona, mas
+            aquele que é sustentável, escalável e proporciona uma experiência fantástica para quem
+            utiliza.
           </p>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Acredito que tecnologia de verdade precisa unir duas coisas que raramente andam juntas:
-            engenharia bem feita por baixo dos panos e um visual profissional que faz o cliente
-            sentir segurança imediata ao navegar.
+            Atuo em todas as camadas do desenvolvimento (Full Stack), garantindo que desde a
+            arquitetura de banco de dados até os detalhes finais da interface estejam perfeitamente
+            alinhados aos objetivos do projeto.
           </p>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Atuo de ponta a ponta — da arquitetura do banco de dados e integrações até o layout
-            responsivo, animações e otimização para o Google — com atendimento remoto para todo o
-            Brasil.
+            Sou <strong className="font-semibold text-foreground">{PROFILE.fullName}</strong> e
+            ofereço atendimento remoto para todo o Brasil, unindo estética autoral, performance e
+            SEO técnico em cada entrega.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3.5">
             <Link
               to="/habilidades"
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-5 py-3 text-sm font-medium text-foreground transition-colors hover:border-primary/50 hover:text-primary"
+              className="btn-ocean inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold"
             >
               Ver minhas habilidades
               <ArrowRight className="h-4 w-4" />
@@ -98,17 +115,17 @@ function SobrePage() {
               href={whatsappHref("Olá Anne! Li sua história no portfólio e gostaria de conversar.")}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-medium text-foreground transition-colors hover:border-primary hover:text-primary"
             >
-              <MessageCircle className="h-4 w-4" />
+              <MessageCircle className="h-4 w-4 text-primary" />
               Falar no WhatsApp
             </a>
           </div>
         </Reveal>
 
         <Reveal delay={0.1} className="lg:col-span-5">
-          <div className="card-surface overflow-hidden rounded-3xl">
-            <div className="bg-tech-grid relative aspect-[4/4] overflow-hidden">
+          <div className="editorial-card overflow-hidden rounded-3xl">
+            <div className="hero-petrol relative aspect-[4/4] overflow-hidden">
               <img
                 src={PROFILE.portrait}
                 alt={PROFILE.fullName}
@@ -118,16 +135,16 @@ function SobrePage() {
             <div className="grid grid-cols-2 gap-4 border-t border-border p-5 text-xs">
               <div>
                 <p className="font-mono text-muted-foreground">Atuação</p>
-                <p className="mt-1 font-medium text-foreground">{PROFILE.role}</p>
+                <p className="mt-1 font-semibold text-foreground">{PROFILE.role}</p>
               </div>
               <div>
                 <p className="font-mono text-muted-foreground">Atendimento</p>
-                <p className="mt-1 font-medium text-foreground">Remoto · Brasil</p>
+                <p className="mt-1 font-semibold text-foreground">Remoto · Brasil</p>
               </div>
               <div className="col-span-2 border-t border-border pt-3">
                 <p className="font-mono text-muted-foreground">Stack principal</p>
-                <p className="mt-1 font-medium text-primary">
-                  React · TypeScript · Node.js · Python · MySQL
+                <p className="mt-1 font-semibold text-primary">
+                  HTML5 · CSS3 · JavaScript · TypeScript · React · Node.js · Python · MySQL
                 </p>
               </div>
             </div>
@@ -138,7 +155,7 @@ function SobrePage() {
       {/* Timeline */}
       <section className="mt-24">
         <Reveal>
-          <p className="font-mono text-xs uppercase tracking-widest text-primary">Trajetória</p>
+          <p className="font-mono text-xs font-semibold uppercase tracking-widest text-primary">Trajetória</p>
           <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl">
             Evolução contínua em engenharia e design
           </h2>
@@ -147,9 +164,9 @@ function SobrePage() {
         <StaggerGroup className="mt-10 grid gap-5 md:grid-cols-3">
           {MILESTONES.map((item) => (
             <StaggerItem key={item.title}>
-              <div className="card-surface h-full rounded-2xl p-6">
-                <span className="font-mono text-xs text-primary">{item.period}</span>
-                <h3 className="mt-2 font-display text-lg font-semibold text-foreground">
+              <div className="editorial-card h-full rounded-2xl p-6">
+                <span className="font-mono text-xs font-semibold text-primary">{item.period}</span>
+                <h3 className="mt-2 font-display text-lg font-bold text-foreground">
                   {item.title}
                 </h3>
                 <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
@@ -164,7 +181,7 @@ function SobrePage() {
       {/* Values */}
       <section className="mt-20">
         <Reveal>
-          <p className="font-mono text-xs uppercase tracking-widest text-primary">Princípios</p>
+          <p className="font-mono text-xs font-semibold uppercase tracking-widest text-primary">Princípios</p>
           <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl">
             O que guia cada entrega
           </h2>
@@ -173,9 +190,9 @@ function SobrePage() {
         <StaggerGroup className="mt-10 grid gap-5 md:grid-cols-3">
           {VALUES.map((val, idx) => (
             <StaggerItem key={val.title}>
-              <div className="card-surface h-full rounded-2xl p-6">
-                <span className="font-mono text-xs text-accent">0{idx + 1}</span>
-                <h3 className="mt-2 font-display text-lg font-semibold text-foreground">
+              <div className="editorial-card h-full rounded-2xl p-6">
+                <span className="font-mono text-xs font-semibold text-primary">0{idx + 1}</span>
+                <h3 className="mt-2 font-display text-lg font-bold text-foreground">
                   {val.title}
                 </h3>
                 <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">{val.text}</p>
@@ -184,6 +201,7 @@ function SobrePage() {
           ))}
         </StaggerGroup>
       </section>
+    </div>
     </div>
   );
 }

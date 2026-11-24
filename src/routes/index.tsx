@@ -56,180 +56,203 @@ function HomePage() {
   const featuredProjects = data.projects.slice(0, 3);
 
   return (
-    <div className="overflow-x-clip pb-8">
-      {/* HERO */}
-      <section className="mx-auto max-w-6xl px-4 pt-12 pb-16 sm:px-6 md:pt-18 md:pb-24">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
-          {/* Portrait in dark tech grid frame */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 18 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="relative mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none"
-          >
-            <div
-              className="pointer-events-none absolute -inset-6 -z-10 rounded-full blur-3xl"
-              style={{ background: "radial-gradient(circle, var(--color-gold-glow), transparent 70%)" }}
-            />
-            <div className="relative overflow-hidden rounded-3xl border border-border bg-surface bg-tech-grid pt-4 shadow-2xl">
-              <img
-                src={PROFILE.portrait}
-                alt={`${PROFILE.name}, ${PROFILE.role}`}
-                className="mx-auto aspect-[4/5] w-full object-cover object-top"
-              />
-              <div
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-32"
-                style={{
-                  background: "linear-gradient(to top, var(--color-background) 10%, transparent)",
-                }}
-              />
-              <div className="glass-pill absolute bottom-4 left-4 right-4 rounded-2xl px-4 py-3 sm:right-auto">
-                <p className="font-display text-sm font-semibold text-foreground">{PROFILE.fullName}</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">
-                  {PROFILE.role} · Remoto Brasil
-                </p>
+    <div className="overflow-x-clip">
+      {/* HERO — Identidade autoral Azul Petróleo & Ciano da Anne */}
+      <section className="hero-petrol relative overflow-hidden">
+        <div className="bg-cyan-grid pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" />
+        <div className="relative mx-auto max-w-6xl px-4 pt-14 pb-20 sm:px-6 md:pt-20 md:pb-24">
+          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+            {/* Coluna esquerda: Apresentação autoral */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-7"
+            >
+              <div className="inline-flex items-center gap-2.5 rounded-full border border-cyan-glow/25 bg-hero-surface/65 px-3.5 py-1.5 font-mono text-xs text-cyan-glow">
+                <span className="h-2 w-2 rounded-full bg-mint" />
+                <span>
+                  {PROFILE.role} · {PROFILE.location}
+                </span>
               </div>
-            </div>
-          </motion.div>
 
-          {/* Headline & CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7"
-          >
-            <div className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground">
-              <span className="h-2 w-2 rounded-full bg-accent" />
-              <span>
-                {PROFILE.role} · {PROFILE.location}
-              </span>
-            </div>
+              <h1 className="mt-5 font-display text-5xl font-bold leading-[0.98] tracking-tight text-hero-foreground sm:text-6xl lg:text-[4.65rem]">
+                Anne Vitória<span className="text-cyan-glow">.</span>
+              </h1>
 
-            <h1 className="mt-4 font-display text-6xl font-bold leading-[0.95] tracking-tight text-primary sm:text-7xl lg:text-[5.25rem]">
-              Anne
-              <br />
-              Vitória
-            </h1>
+              <p className="mt-5 font-display text-2xl font-semibold leading-snug text-hero-foreground/90 sm:text-3xl">
+                Transformando código em{" "}
+                <span className="text-cyan-glow">soluções reais</span>.
+              </p>
 
-            <p className="mt-6 font-display text-2xl font-semibold leading-snug text-foreground sm:text-3xl">
-              Projetos reais,
-              <br />
-              <span className="text-muted-foreground">do código à publicação.</span>
-            </p>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-hero-muted">
+                Do banco de dados à interface, construo aplicações web modernas, escaláveis e com
+                acabamento visual impecável. Sistemas que saem do papel e geram valor de verdade.
+              </p>
 
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
-              Sites profissionais, sistemas web e interfaces sob medida que transmitem autoridade,
-              carregam rápido no celular e transformam visitantes em clientes.
-            </p>
+              <div className="mt-8 flex flex-wrap items-center gap-3.5">
+                <Link
+                  to="/projetos"
+                  className="btn-ocean inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold"
+                >
+                  Ver Projetos
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <a
+                  href={whatsappHref()}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-hero-surface/50 px-6 py-3.5 text-sm font-medium text-hero-foreground transition-colors hover:border-cyan-glow hover:text-cyan-glow"
+                >
+                  <MessageCircle className="h-4 w-4 text-cyan-glow" />
+                  Falar no WhatsApp
+                </a>
+              </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3.5">
-              <a
-                href={whatsappHref()}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 text-sm font-semibold text-accent-foreground transition-transform hover:scale-[1.03] active:scale-[0.98]"
-                style={{ boxShadow: "0 12px 28px -8px var(--color-emerald-glow)" }}
-              >
-                <MessageCircle className="h-4 w-4" />
-                Falar no WhatsApp
-              </a>
-              <Link
-                to="/projetos"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-6 py-3.5 text-sm font-medium text-foreground transition-colors hover:border-primary/50 hover:text-primary"
-              >
-                Ver projetos
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+              <div className="mt-10 grid grid-cols-3 gap-6 border-t border-cyan-glow/15 pt-7">
+                {HERO_METRICS.map((metric) => (
+                  <div key={metric.label}>
+                    <p className="font-display text-2xl font-bold text-hero-foreground sm:text-3xl">
+                      <AnimatedCounter value={metric.value} suffix={metric.suffix} />
+                    </p>
+                    <p className="mt-1 text-xs text-hero-muted sm:text-sm">{metric.label}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
 
-            <div className="mt-10 grid grid-cols-3 gap-6 border-t border-border pt-7">
-              {HERO_METRICS.map((metric) => (
-                <div key={metric.label}>
-                  <p className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-                    <AnimatedCounter value={metric.value} suffix={metric.suffix} />
+            {/* Coluna direita: Retrato editorial em moldura ciano rotacionada */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="relative mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none"
+            >
+              <div className="relative rounded-[28px] border border-cyan-glow/35 bg-gradient-to-br from-cyan-glow/20 via-hero-surface/40 to-transparent p-3 shadow-2xl transition-transform duration-500 hover:rotate-0 lg:rotate-2">
+                <img
+                  src={PROFILE.portrait}
+                  alt={`${PROFILE.name}, ${PROFILE.role}`}
+                  className="aspect-[4/5] w-full rounded-[20px] object-cover object-top"
+                />
+                <div className="absolute -bottom-4 left-4 right-4 rounded-2xl border border-border bg-card px-4 py-3 text-foreground shadow-xl sm:left-5 sm:right-auto">
+                  <p className="font-display text-sm font-bold text-foreground">
+                    {PROFILE.fullName}
                   </p>
-                  <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{metric.label}</p>
+                  <p className="mt-0.5 font-mono text-[11px] text-primary">
+                    Full Stack · Do banco à interface
+                  </p>
                 </div>
-              ))}
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* TECH MARQUEE */}
-      <section aria-label="Tecnologias utilizadas" className="overflow-hidden border-y border-border bg-surface/40 py-5">
+      {/* FAIXA DE TECNOLOGIAS (Domínio Técnico) */}
+      <section
+        id="habilidades"
+        aria-label="Tecnologias utilizadas"
+        className="overflow-hidden border-y border-cyan-glow/15 bg-hero-surface py-4"
+      >
         <div className="flex w-max animate-marquee gap-4">
           {[...TECH_MARQUEE, ...TECH_MARQUEE].map((tech, idx) => (
             <span
               key={`${tech}-${idx}`}
-              className="inline-flex items-center gap-2.5 rounded-full border border-border bg-card/80 px-4 py-1.5 font-mono text-xs text-muted-foreground"
+              className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/20 bg-hero/60 px-4 py-1.5 font-mono text-xs text-hero-muted"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-primary/70" />
+              <span className="h-1.5 w-1.5 rounded-full bg-cyan-glow" />
               {tech}
             </span>
           ))}
         </div>
       </section>
 
-      {/* INTERACTIVE CODE SHOWCASE */}
+      {/* ESPECIALIDADES & SERVIÇOS — Fundo Claro Editorial */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <Reveal>
-          <CodeShowcase />
-        </Reveal>
-      </section>
-
-      {/* SERVICES / ESPECIALIDADES */}
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <Reveal className="max-w-2xl">
-          <p className="font-mono text-xs uppercase tracking-widest text-primary">O que eu faço</p>
-          <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Sistemas, sites e interfaces sob medida para o seu negócio
+          <p className="font-mono text-xs font-semibold uppercase tracking-widest text-primary">
+            O que eu desenvolvo
+          </p>
+          <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl">
+            Soluções sob medida que unem <span className="text-primary">engenharia e design</span>
           </h2>
           <p className="mt-4 text-base text-muted-foreground">
-            Cada entrega combina design refinado, código sustentável e SEO técnico para que seu
-            projeto passe credibilidade desde o primeiro clique.
+            Cada projeto nasce com foco em performance, clareza visual e SEO técnico para valorizar
+            o seu negócio em qualquer tela.
           </p>
         </Reveal>
 
         <StaggerGroup className="mt-12 grid gap-5 md:grid-cols-2">
-          {SERVICES.map((service) => (
-            <StaggerItem key={service.number}>
-              <article className="card-surface flex h-full flex-col justify-between rounded-2xl p-6 sm:p-7">
-                <div>
-                  <span className="font-mono text-xs font-semibold text-primary">
-                    {service.number}
-                  </span>
-                  <h3 className="mt-3 font-display text-xl font-semibold text-foreground">
-                    {service.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    {service.description}
-                  </p>
-                </div>
-
-                <div className="mt-6 border-t border-border pt-4">
-                  <p className="text-xs text-muted-foreground">{service.audience}</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {service.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-secondary px-2.5 py-0.5 font-mono text-[11px] text-primary"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+          {SERVICES.map((service, idx) => {
+            const isFeatured = idx === 0;
+            return (
+              <StaggerItem key={service.number}>
+                <article
+                  className={`flex h-full flex-col justify-between rounded-3xl p-7 ${
+                    isFeatured ? "featured-petrol-card" : "editorial-card"
+                  }`}
+                >
+                  <div>
+                    <span
+                      className={`font-mono text-xs font-semibold ${
+                        isFeatured ? "text-cyan-glow" : "text-primary"
+                      }`}
+                    >
+                      {service.number}
+                    </span>
+                    <h3
+                      className={`mt-3 font-display text-xl font-bold ${
+                        isFeatured ? "text-hero-foreground" : "text-foreground"
+                      }`}
+                    >
+                      {service.title}
+                    </h3>
+                    <p
+                      className={`mt-3 text-sm leading-relaxed ${
+                        isFeatured ? "text-hero-muted" : "text-muted-foreground"
+                      }`}
+                    >
+                      {service.description}
+                    </p>
                   </div>
-                </div>
-              </article>
-            </StaggerItem>
-          ))}
+
+                  <div
+                    className={`mt-6 border-t pt-4 ${
+                      isFeatured ? "border-cyan-glow/20" : "border-border"
+                    }`}
+                  >
+                    <p
+                      className={`text-xs ${
+                        isFeatured ? "text-hero-muted" : "text-muted-foreground"
+                      }`}
+                    >
+                      {service.audience}
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {service.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className={`rounded-full px-2.5 py-0.5 font-mono text-[11px] ${
+                            isFeatured
+                              ? "border border-cyan-glow/25 bg-hero/40 text-cyan-glow"
+                              : "bg-secondary text-primary"
+                          }`}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              </StaggerItem>
+            );
+          })}
         </StaggerGroup>
 
         <Reveal className="mt-8">
           <Link
             to="/habilidades"
-            className="inline-flex items-center gap-2 font-mono text-sm text-primary transition-colors hover:text-foreground"
+            className="inline-flex items-center gap-2 font-mono text-sm font-medium text-primary transition-colors hover:text-foreground"
           >
             Explorar todas as habilidades técnicas
             <ArrowRight className="h-4 w-4" />
@@ -237,81 +260,102 @@ function HomePage() {
         </Reveal>
       </section>
 
-      {/* FEATURED PROJECTS */}
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <Reveal className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <p className="font-mono text-xs uppercase tracking-widest text-primary">Portfólio</p>
-            <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Projetos em destaque
-            </h2>
-          </div>
-          <Link
-            to="/projetos"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-foreground"
-          >
-            Ver todos os projetos
-            <ArrowUpRight className="h-4 w-4" />
-          </Link>
-        </Reveal>
+      {/* PROJETOS EM DESTAQUE */}
+      <section className="border-y border-border bg-surface/65 py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <Reveal className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <p className="font-mono text-xs font-semibold uppercase tracking-widest text-primary">
+                Portfólio
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl">
+                Projetos em <span className="text-primary">destaque</span>
+              </h2>
+            </div>
+            <Link
+              to="/projetos"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-foreground"
+            >
+              Ver todos os projetos
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </Reveal>
 
-        <StaggerGroup className="mt-10 grid gap-6 md:grid-cols-3">
-          {featuredProjects.map((project) => (
-            <StaggerItem key={project.id}>
-              <Link
-                to="/projetos"
-                className="card-surface group flex h-full flex-col overflow-hidden rounded-2xl"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden bg-surface">
-                  <img
-                    src={project.image}
-                    alt={`Prévia do projeto ${project.title}`}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <span className="glass-pill absolute top-3 left-3 rounded-full px-3 py-1 font-mono text-[11px] text-primary">
-                    {project.category}
-                  </span>
-                </div>
-                <div className="flex flex-1 flex-col p-5">
-                  <h3 className="font-display text-lg font-semibold text-foreground transition-colors group-hover:text-primary">
-                    {project.title}
-                  </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                    {project.summary}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-1.5">
-                    {project.stack.slice(0, 3).map((tech) => (
-                      <span
-                        key={tech}
-                        className="rounded-md border border-border bg-background/60 px-2 py-0.5 font-mono text-[11px] text-muted-foreground"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+          <StaggerGroup className="mt-10 grid gap-6 md:grid-cols-3">
+            {featuredProjects.map((project) => (
+              <StaggerItem key={project.id}>
+                <Link
+                  to="/projetos"
+                  className="editorial-card group flex h-full flex-col overflow-hidden rounded-3xl"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-hero">
+                    <img
+                      src={project.image}
+                      alt={`Prévia do projeto ${project.title}`}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <span className="absolute top-3 left-3 rounded-full bg-hero/85 px-3 py-1 font-mono text-[11px] text-cyan-glow backdrop-blur-md">
+                      {project.category}
+                    </span>
                   </div>
-                </div>
-              </Link>
-            </StaggerItem>
-          ))}
-        </StaggerGroup>
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="font-display text-lg font-bold text-foreground transition-colors group-hover:text-primary">
+                      {project.title}
+                    </h3>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                      {project.summary}
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {project.stack.slice(0, 3).map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded-md bg-secondary px-2 py-0.5 font-mono text-[11px] text-secondary-foreground"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              </StaggerItem>
+            ))}
+          </StaggerGroup>
+        </div>
       </section>
 
-      {/* WORK PILLARS */}
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+      {/* ENGENHARIA & CÓDIGO */}
+      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+        <Reveal className="mb-10 text-center">
+          <p className="font-mono text-xs font-semibold uppercase tracking-widest text-primary">
+            Por baixo dos panos
+          </p>
+          <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl">
+            Cuidado técnico em cada linha
+          </h2>
+        </Reveal>
+        <Reveal>
+          <CodeShowcase />
+        </Reveal>
+      </section>
+
+      {/* COMO EU TRABALHO */}
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <Reveal className="max-w-2xl">
-          <p className="font-mono text-xs uppercase tracking-widest text-primary">Como eu trabalho</p>
-          <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Por que contratar um desenvolvimento sob medida
+          <p className="font-mono text-xs font-semibold uppercase tracking-widest text-primary">
+            Como eu trabalho
+          </p>
+          <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl">
+            Compromisso do planejamento ao suporte
           </h2>
         </Reveal>
 
         <StaggerGroup className="mt-10 grid gap-5 sm:grid-cols-2">
           {WORK_PILLARS.map((pillar, idx) => (
             <StaggerItem key={pillar.title}>
-              <div className="card-surface h-full rounded-2xl p-6">
-                <span className="font-mono text-xs text-accent">0{idx + 1}</span>
-                <h3 className="mt-2 font-display text-lg font-semibold text-foreground">
+              <div className="editorial-card h-full rounded-2xl p-6">
+                <span className="font-mono text-xs font-semibold text-primary">0{idx + 1}</span>
+                <h3 className="mt-2 font-display text-lg font-bold text-foreground">
                   {pillar.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -326,8 +370,10 @@ function HomePage() {
       {/* FAQ */}
       <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
         <Reveal className="text-center">
-          <p className="font-mono text-xs uppercase tracking-widest text-primary">Dúvidas frequentes</p>
-          <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <p className="font-mono text-xs font-semibold uppercase tracking-widest text-primary">
+            Dúvidas frequentes
+          </p>
+          <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl">
             Perguntas sobre sites e sistemas
           </h2>
         </Reveal>
@@ -336,14 +382,14 @@ function HomePage() {
           {FAQS.map((item, index) => {
             const isOpen = openFaq === index;
             return (
-              <div key={item.q} className="card-surface overflow-hidden rounded-2xl">
+              <div key={item.q} className="editorial-card overflow-hidden rounded-2xl">
                 <button
                   type="button"
                   onClick={() => setOpenFaq(isOpen ? null : index)}
                   aria-expanded={isOpen}
                   className="flex w-full items-center justify-between gap-4 px-6 py-4.5 text-left"
                 >
-                  <span className="font-display text-base font-medium text-foreground">
+                  <span className="font-display text-base font-semibold text-foreground">
                     {item.q}
                   </span>
                   <ChevronDown
@@ -373,44 +419,40 @@ function HomePage() {
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section className="mx-auto max-w-6xl px-4 pt-8 sm:px-6">
+      {/* CTA FINAL */}
+      <section className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
         <Reveal>
-          <div className="card-surface relative overflow-hidden rounded-3xl px-6 py-12 text-center sm:px-12 sm:py-16">
-            <div
-              className="pointer-events-none absolute inset-0 -z-10 opacity-70"
-              style={{
-                background:
-                  "radial-gradient(circle at 50% 0%, var(--color-gold-glow), transparent 65%)",
-              }}
-            />
-            <p className="font-mono text-xs uppercase tracking-widest text-primary">
-              Vamos tirar sua ideia do papel
-            </p>
-            <h2 className="mx-auto mt-3 max-w-2xl font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Pronto para ter um site ou sistema no nível que o seu negócio merece?
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-              Conte o que você precisa pelo WhatsApp ou formulário de contato. Atendimento remoto
-              para todo o Brasil com retorno rápido.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3.5">
-              <a
-                href={whatsappHref()}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 text-sm font-semibold text-accent-foreground transition-transform hover:scale-[1.03]"
-              >
-                <MessageCircle className="h-4 w-4" />
-                Chamar no WhatsApp
-              </a>
-              <Link
-                to="/contato"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-6 py-3.5 text-sm font-medium text-foreground transition-colors hover:border-primary/50 hover:text-primary"
-              >
-                Solicitar orçamento
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+          <div className="hero-petrol relative overflow-hidden rounded-3xl border border-cyan-glow/20 px-6 py-12 text-center shadow-2xl sm:px-12 sm:py-16">
+            <div className="bg-cyan-grid pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" />
+            <div className="relative">
+              <p className="font-mono text-xs uppercase tracking-widest text-cyan-glow">
+                Vamos tirar sua ideia do papel
+              </p>
+              <h2 className="mx-auto mt-3 max-w-2xl font-display text-3xl font-bold text-hero-foreground sm:text-4xl">
+                Pronto para construir um projeto digital à altura da sua marca?
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-hero-muted sm:text-base">
+                Conte o que você precisa pelo WhatsApp ou formulário de contato. Atendimento remoto
+                para todo o Brasil.
+              </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-3.5">
+                <a
+                  href={whatsappHref()}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-ocean inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Chamar no WhatsApp
+                </a>
+                <Link
+                  to="/contato"
+                  className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-hero-surface/60 px-6 py-3.5 text-sm font-medium text-hero-foreground transition-colors hover:border-cyan-glow hover:text-cyan-glow"
+                >
+                  Solicitar orçamento
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </Reveal>

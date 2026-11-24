@@ -1,32 +1,25 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Github, Mail, Menu, MessageCircle, Search, X } from "lucide-react";
+import {
+  ArrowUpRight,
+  Github,
+  LockKeyhole,
+  Mail,
+  Menu,
+  MessageCircle,
+  Search,
+  X,
+} from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
-import { MatrixBackdrop } from "@/components/MatrixBackdrop";
 import { PROFILE, PROJECTS, whatsappHref } from "@/data/portfolio";
 
-const LEFT_LINKS = [
-  { to: "/habilidades" as const, label: "Habilidades" },
-  { to: "/projetos" as const, label: "Projetos" },
-];
-
-const RIGHT_LINKS = [
-  { to: "/sobre" as const, label: "Sobre" },
-  { to: "/contato" as const, label: "Contato" },
-];
-
-const ALL_LINKS = [
+const NAV_LINKS = [
   { to: "/" as const, label: "Início", hint: "Página principal" },
   { to: "/habilidades" as const, label: "Habilidades", hint: "Stack técnica e processo" },
   { to: "/projetos" as const, label: "Projetos", hint: "Portfólio interativo" },
   { to: "/sobre" as const, label: "Sobre", hint: "Trajetória e valores" },
   { to: "/contato" as const, label: "Contato", hint: "WhatsApp, e-mail e orçamento" },
 ];
-
-function pathToTerminal(pathname: string): string {
-  if (pathname === "/") return "~/index";
-  return `~${pathname}`;
-}
 
 export function SiteLayout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
@@ -54,7 +47,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
   }, []);
 
   const normalized = query.trim().toLowerCase();
-  const matchedLinks = ALL_LINKS.filter(
+  const matchedLinks = NAV_LINKS.filter(
     (item) =>
       !normalized ||
       item.label.toLowerCase().includes(normalized) ||
@@ -70,88 +63,45 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="relative flex min-h-screen flex-col bg-background text-foreground">
-      <MatrixBackdrop />
-
-      <header className="sticky top-0 z-40 w-full px-4 pt-4 sm:px-6">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
+      <header className="glass-nav sticky top-0 z-40 w-full">
+        <div className="mx-auto flex h-19 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
           <Link
             to="/"
-            className="hidden items-center font-mono text-xs text-muted-foreground transition-colors hover:text-foreground lg:inline-flex"
-            aria-label="Caminho atual — voltar ao início"
+            aria-label={`${PROFILE.name} — página inicial`}
+            className="inline-flex items-center gap-3 transition-transform hover:scale-[1.02]"
           >
-            <span>{pathToTerminal(pathname)}</span>
-            <span className="ml-0.5 inline-block h-3.5 w-1.5 bg-primary animate-cursor" />
+            <span className="av-brand-mark inline-flex h-10 w-10 items-center justify-center rounded-xl font-display text-sm font-bold tracking-tight">
+              AV
+            </span>
+            <span className="font-display text-base font-bold tracking-tight text-hero-foreground">
+              {PROFILE.name}
+            </span>
           </Link>
 
-          <nav
-            aria-label="Navegação principal"
-            className="glass-pill mx-auto flex items-center gap-1 rounded-full px-2.5 py-1.5 sm:gap-2 sm:px-4"
-          >
-            <div className="hidden items-center gap-1 md:flex">
-              {LEFT_LINKS.map((item) => {
-                const active = pathname === item.to;
-                return (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    className={`relative rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors ${
-                      active ? "text-foreground" : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {active && (
-                      <motion.span
-                        layoutId="nav-active-pill"
-                        transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                        className="absolute inset-0 rounded-full bg-secondary"
-                      />
-                    )}
-                    <span className="relative z-10">{item.label}</span>
-                  </Link>
-                );
-              })}
-            </div>
-
-            <Link
-              to="/"
-              aria-label={`${PROFILE.name} — página inicial`}
-              className="px-2.5 py-1 font-display text-lg font-bold tracking-tight text-primary transition-transform hover:scale-105 sm:px-3 sm:text-xl"
-            >
-              {PROFILE.monogram}
-            </Link>
-
-            <div className="hidden items-center gap-1 md:flex">
-              {RIGHT_LINKS.map((item) => {
-                const active = pathname === item.to;
-                return (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    className={`relative rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors ${
-                      active ? "text-foreground" : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {active && (
-                      <motion.span
-                        layoutId="nav-active-pill"
-                        transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                        className="absolute inset-0 rounded-full bg-secondary"
-                      />
-                    )}
-                    <span className="relative z-10">{item.label}</span>
-                  </Link>
-                );
-              })}
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setMobileOpen((prev) => !prev)}
-              aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
-              aria-expanded={mobileOpen}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full text-foreground transition-colors hover:bg-secondary md:hidden"
-            >
-              {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-            </button>
+          <nav aria-label="Navegação principal" className="hidden items-center gap-1 md:flex">
+            {NAV_LINKS.map((item) => {
+              const active = pathname === item.to;
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                    active
+                      ? "text-hero-foreground"
+                      : "text-hero-muted hover:text-hero-foreground"
+                  }`}
+                >
+                  {active && (
+                    <motion.span
+                      layoutId="nav-active-pill"
+                      transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                      className="absolute inset-0 rounded-full border border-cyan-glow/30 bg-cyan-glow/15"
+                    />
+                  )}
+                  <span className="relative z-10">{item.label}</span>
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-2">
@@ -159,13 +109,36 @@ export function SiteLayout({ children }: { children: ReactNode }) {
               type="button"
               onClick={() => setSearchOpen(true)}
               aria-label="Buscar páginas e projetos"
-              className="glass-pill inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+              className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/20 bg-hero-surface/60 px-3 py-1.5 text-xs text-hero-muted transition-colors hover:border-cyan-glow/45 hover:text-hero-foreground"
             >
               <Search className="h-3.5 w-3.5" />
               <span className="hidden sm:inline">Buscar</span>
-              <kbd className="hidden rounded border border-border bg-secondary/80 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground sm:inline">
+              <kbd className="hidden rounded border border-cyan-glow/20 bg-hero/70 px-1.5 py-0.5 font-mono text-[10px] text-hero-muted lg:inline">
                 Ctrl K
               </kbd>
+            </button>
+
+            <Link
+              to="/login"
+              title="Painel administrativo"
+              aria-label="Acessar painel administrativo"
+              className={`inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors ${
+                pathname === "/login" || pathname === "/dashboard"
+                  ? "border-cyan-glow/60 bg-cyan-glow/20 text-cyan-glow"
+                  : "border-cyan-glow/20 bg-hero-surface/60 text-hero-muted hover:border-cyan-glow/45 hover:text-hero-foreground"
+              }`}
+            >
+              <LockKeyhole className="h-4 w-4" />
+            </Link>
+
+            <button
+              type="button"
+              onClick={() => setMobileOpen((prev) => !prev)}
+              aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
+              aria-expanded={mobileOpen}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan-glow/20 bg-hero-surface/60 text-hero-foreground transition-colors hover:border-cyan-glow/45 md:hidden"
+            >
+              {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
           </div>
         </div>
@@ -173,14 +146,14 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -12, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.98 }}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
-              className="glass-pill mx-auto mt-3 max-w-sm rounded-2xl p-3 md:hidden"
+              className="overflow-hidden border-t border-cyan-glow/15 bg-hero px-4 pb-4 md:hidden"
             >
-              <div className="flex flex-col gap-1">
-                {ALL_LINKS.map((item) => {
+              <div className="flex flex-col gap-1 pt-3">
+                {NAV_LINKS.map((item) => {
                   const active = pathname === item.to;
                   return (
                     <Link
@@ -188,21 +161,28 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                       to={item.to}
                       className={`flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-medium transition-colors ${
                         active
-                          ? "bg-secondary text-primary"
-                          : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
+                          ? "bg-cyan-glow/15 text-cyan-glow"
+                          : "text-hero-muted hover:bg-hero-surface hover:text-hero-foreground"
                       }`}
                     >
                       <span>{item.label}</span>
-                      <span className="font-mono text-[11px] text-muted-foreground">{item.hint}</span>
+                      <span className="font-mono text-[11px] opacity-75">{item.hint}</span>
                     </Link>
                   );
                 })}
+                <Link
+                  to="/login"
+                  className="flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-medium text-hero-muted hover:bg-hero-surface hover:text-hero-foreground"
+                >
+                  <span>Painel ADM</span>
+                  <LockKeyhole className="h-4 w-4" />
+                </Link>
               </div>
               <a
                 href={whatsappHref()}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground"
+                className="btn-ocean mt-3 flex w-full items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"
               >
                 <MessageCircle className="h-4 w-4" />
                 Falar no WhatsApp
@@ -214,53 +194,63 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 
       <main className="flex-1">{children}</main>
 
-      <footer className="mt-24 border-t border-border bg-surface/60">
+      <footer className="hero-petrol mt-20 border-t border-cyan-glow/15">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           <div className="grid gap-10 md:grid-cols-4">
             <div className="md:col-span-2">
-              <Link to="/" className="font-display text-2xl font-bold text-primary">
-                {PROFILE.monogram}{" "}
-                <span className="ml-1 text-lg text-foreground">{PROFILE.name}</span>
+              <Link to="/" className="inline-flex items-center gap-3">
+                <span className="av-brand-mark inline-flex h-10 w-10 items-center justify-center rounded-xl font-display text-sm font-bold">
+                  AV
+                </span>
+                <span className="font-display text-lg font-bold text-hero-foreground">
+                  {PROFILE.name}
+                </span>
               </Link>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
-                {PROFILE.role} · {PROFILE.location}. Sites rápidos, sistemas sob medida e interfaces
-                projetadas para transmitir confiança e gerar resultados reais.
+              <p className="mt-4 max-w-md text-sm leading-relaxed text-hero-muted">
+                {PROFILE.role} · {PROFILE.location}. Desenvolvendo ideias com tecnologia,
+                interfaces limpas, código sustentável e foco em resultados reais.
               </p>
             </div>
 
             <div>
-              <p className="font-mono text-xs uppercase tracking-wider text-primary">Navegação</p>
-              <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
-                {ALL_LINKS.map((item) => (
+              <p className="font-mono text-xs uppercase tracking-wider text-cyan-glow">Navegação</p>
+              <ul className="mt-4 space-y-2.5 text-sm text-hero-muted">
+                {NAV_LINKS.map((item) => (
                   <li key={item.to}>
-                    <Link to={item.to} className="transition-colors hover:text-foreground">
+                    <Link to={item.to} className="transition-colors hover:text-hero-foreground">
                       {item.label}
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <Link to="/login" className="inline-flex items-center gap-1.5 transition-colors hover:text-cyan-glow">
+                    <LockKeyhole className="h-3.5 w-3.5" />
+                    Painel ADM
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
-              <p className="font-mono text-xs uppercase tracking-wider text-primary">Contato direto</p>
-              <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
+              <p className="font-mono text-xs uppercase tracking-wider text-cyan-glow">Contato direto</p>
+              <ul className="mt-4 space-y-2.5 text-sm text-hero-muted">
                 <li>
                   <a
                     href={whatsappHref()}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 transition-colors hover:text-accent"
+                    className="inline-flex items-center gap-2 transition-colors hover:text-hero-foreground"
                   >
-                    <MessageCircle className="h-4 w-4 text-accent" />
+                    <MessageCircle className="h-4 w-4 text-cyan-glow" />
                     {PROFILE.whatsappDisplay}
                   </a>
                 </li>
                 <li>
                   <a
                     href={`mailto:${PROFILE.email}`}
-                    className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
+                    className="inline-flex items-center gap-2 transition-colors hover:text-hero-foreground"
                   >
-                    <Mail className="h-4 w-4 text-primary" />
+                    <Mail className="h-4 w-4 text-cyan-glow" />
                     {PROFILE.email}
                   </a>
                 </li>
@@ -269,9 +259,9 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                     href={PROFILE.githubUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
+                    className="inline-flex items-center gap-2 transition-colors hover:text-hero-foreground"
                   >
-                    <Github className="h-4 w-4 text-primary" />
+                    <Github className="h-4 w-4 text-cyan-glow" />
                     github.com/Annevps
                   </a>
                 </li>
@@ -279,7 +269,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             </div>
           </div>
 
-          <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
+          <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-cyan-glow/15 pt-6 text-xs text-hero-muted sm:flex-row sm:items-center">
             <p>© {new Date().getFullYear()} {PROFILE.fullName}. Todos os direitos reservados.</p>
             <p className="font-mono">{PROFILE.location}</p>
           </div>
@@ -291,8 +281,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         target="_blank"
         rel="noreferrer"
         aria-label="Falar com Anne Vitória no WhatsApp"
-        className="fixed right-5 bottom-5 z-40 inline-flex h-13 w-13 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg transition-transform hover:scale-110 active:scale-95"
-        style={{ boxShadow: "0 10px 30px -6px var(--color-emerald-glow)" }}
+        className="btn-ocean fixed right-5 bottom-5 z-40 inline-flex h-13 w-13 items-center justify-center rounded-full"
       >
         <MessageCircle className="h-6 w-6" />
       </a>
@@ -303,7 +292,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-start justify-center bg-background/80 px-4 pt-24 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-start justify-center bg-hero/75 px-4 pt-24 backdrop-blur-md"
             onClick={() => setSearchOpen(false)}
           >
             <motion.div
@@ -312,7 +301,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
               exit={{ opacity: 0, y: -10, scale: 0.97 }}
               transition={{ duration: 0.18 }}
               onClick={(e) => e.stopPropagation()}
-              className="card-surface w-full max-w-lg overflow-hidden rounded-2xl"
+              className="w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
             >
               <div className="flex items-center gap-3 border-b border-border px-4 py-3.5">
                 <Search className="h-4 w-4 text-muted-foreground" />

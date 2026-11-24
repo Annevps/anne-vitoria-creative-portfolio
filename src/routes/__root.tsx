@@ -88,7 +88,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Portfólio profissional de Anne Vitória, Desenvolvedora Full Stack. Sites rápidos, sistemas web sob medida e interfaces modernas com atendimento remoto para todo o Brasil.",
       },
       { name: "author", content: PROFILE.fullName },
-      { name: "theme-color", content: "#0b0e12" },
+      { name: "theme-color", content: "#0c1b28" },
       { property: "og:title", content: "Anne Vitória | Desenvolvedora Full Stack" },
       {
         property: "og:description",
@@ -131,7 +131,7 @@ function RootShell({ children }: { children: ReactNode }) {
   };
 
   return (
-    <html lang="pt-BR" className="dark">
+    <html lang="pt-BR">
       <head>
         <HeadContent />
         <script
@@ -155,7 +155,7 @@ function RootComponent() {
       <SiteLayout>
         <Outlet />
       </SiteLayout>
-      <Toaster theme="dark" position="bottom-left" richColors />
+      <Toaster theme="light" position="bottom-left" richColors />
     </QueryClientProvider>
   );
 }
