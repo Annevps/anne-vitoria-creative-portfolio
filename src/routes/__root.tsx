@@ -9,9 +9,12 @@ import {
   type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SiteLayout } from "@/components/SiteLayout";
+import { PROFILE } from "@/data/portfolio";
 
 function NotFoundComponent() {
   return (
@@ -75,22 +78,33 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
-    // Replace these placeholders with the app's name and description when first building the app.
-    // Each content route, / included, must still set its own head(). Never add og:image or
-    // twitter:image here: every page without its own would inherit the root's preview image.
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Anne Vitória | Desenvolvedora Full Stack" },
+      {
+        name: "description",
+        content:
+          "Portfólio profissional de Anne Vitória, Desenvolvedora Full Stack. Sites rápidos, sistemas web sob medida e interfaces modernas com atendimento remoto para todo o Brasil.",
+      },
+      { name: "author", content: PROFILE.fullName },
+      { name: "theme-color", content: "#0b0e12" },
+      { property: "og:title", content: "Anne Vitória | Desenvolvedora Full Stack" },
+      {
+        property: "og:description",
+        content:
+          "Sites profissionais, sistemas sob medida e interfaces de alto padrão. Atendimento remoto para todo o Brasil.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,
@@ -105,10 +119,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: PROFILE.fullName,
+    alternateName: PROFILE.name,
+    jobTitle: PROFILE.role,
+    email: `mailto:${PROFILE.email}`,
+    sameAs: [PROFILE.githubUrl],
+    areaServed: "Brasil",
+  };
+
   return (
-    <html lang="en">
+    <html lang="pt-BR" className="dark">
       <head>
         <HeadContent />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body>
         {children}
@@ -123,8 +152,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <SiteLayout>
+        <Outlet />
+      </SiteLayout>
+      <Toaster theme="dark" position="bottom-left" richColors />
     </QueryClientProvider>
   );
 }
