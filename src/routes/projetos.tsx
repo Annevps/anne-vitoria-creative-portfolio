@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowUpRight,
@@ -7,13 +7,14 @@ import {
   Code2,
   ExternalLink,
   Github,
+  LockKeyhole,
   MessageCircle,
   Search,
   X,
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Reveal } from "@/components/MotionPrimitives";
-import { PROJECTS, whatsappHref, type ProjectItem } from "@/data/portfolio";
+import { whatsappHref, type ProjectItem } from "@/data/portfolio";
 import { fetchPortfolioProjects } from "@/lib/remoteProjects";
 
 export const Route = createFileRoute("/projetos")({
@@ -38,8 +39,6 @@ export const Route = createFileRoute("/projetos")({
   component: ProjetosPage,
 });
 
-const CATEGORIES = ["Todos", "Sistemas Web", "E-commerce", "Sites Institucionais"] as const;
-
 function normalizeText(value: string): string {
   return value
     .normalize("NFD")
@@ -49,20 +48,25 @@ function normalizeText(value: string): string {
 
 function ProjetosPage() {
   const [viewMode, setViewMode] = useState<"client" | "technical">("client");
-  const [category, setCategory] = useState<(typeof CATEGORIES)[number]>("Todos");
+  const [category, setCategory] = useState<string>("Todos");
   const [search, setSearch] = useState("");
   const [activeProject, setActiveProject] = useState<ProjectItem | null>(null);
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["portfolio-projects"],
     queryFn: fetchPortfolioProjects,
-    initialData: { projects: PROJECTS, syncedCount: 0 },
     staleTime: 1000 * 60 * 5,
   });
 
+  const projects = data?.projects ?? [];
+  const categories = useMemo(() => {
+    const unique = Array.from(new Set(projects.map((p) => p.category).filter(Boolean)));
+    return ["Todos", ...unique];
+  }, [projects]);
+
   const filtered = useMemo(() => {
     const q = normalizeText(search.trim());
-    return data.projects.filter((project) => {
+    return projects.filter((project) => {
       const matchesCategory = category === "Todos" || project.category === category;
       if (!matchesCategory) return false;
       if (!q) return true;
@@ -73,9 +77,9 @@ function ProjetosPage() {
         project.stack.some((t) => normalizeText(t).includes(q))
       );
     });
-  }, [data.projects, category, search]);
+  }, [projects, category, search]);
 
-  const repoCount = data.projects.filter((p) => p.repoUrl).length;
+  const repoCount = projects.filter((p) => p.repoUrl).length;
 
   return (
     <div>
@@ -98,15 +102,21 @@ function ProjetosPage() {
 
           <Reveal className="mt-10 grid grid-cols-3 gap-4 sm:max-w-xl">
             <div className="rounded-2xl border border-cyan-glow/20 bg-hero-surface/60 p-4">
-              <p className="font-display text-2xl font-bold text-hero-foreground">{data.projects.length}</p>
+              <p className="font-display text-2xl font-bold text-hero-foreground">
+                {isLoading ? "—" : projects.length}
+              </p>
               <p className="mt-0.5 text-xs text-hero-muted">projetos no portfólio</p>
             </div>
             <div className="rounded-2xl border border-cyan-glow/20 bg-hero-surface/60 p-4">
-              <p className="font-display text-2xl font-bold text-cyan-glow">{CATEGORIES.length - 1}</p>
+              <p className="font-display text-2xl font-bold text-cyan-glow">
+                {isLoading ? "—" : Math.max(0, categories.length - 1)}
+              </p>
               <p className="mt-0.5 text-xs text-hero-muted">áreas atendidas</p>
             </div>
             <div className="rounded-2xl border border-cyan-glow/20 bg-hero-surface/60 p-4">
-              <p className="font-display text-2xl font-bold text-mint">{repoCount}</p>
+              <p className="font-display text-2xl font-bold text-mint">
+                {isLoading ? "—" : repoCount}
+              </p>
               <p className="mt-0.5 text-xs text-hero-muted">códigos disponíveis</p>
             </div>
           </Reveal>
@@ -175,7 +185,7 @@ function ProjetosPage() {
 
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
           <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrar por categoria">
-            {CATEGORIES.map((cat) => {
+            {categories.map((cat) => {
               const active = category === cat;
               return (
                 <button
@@ -201,7 +211,13 @@ function ProjetosPage() {
       </div>
 
       {/* Grid */}
-      {filtered.length > 0 ? (
+      {isLoading ? (
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {[1, 2, 3].map((slot) => (
+            <div key={slot} className="editorial-card h-80 animate-pulse rounded-3xl p-6" />
+          ))}
+        </div>
+      ) : filtered.length > 0 ? (
         <motion.div layout className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {filtered.map((project) => (
@@ -281,21 +297,35 @@ function ProjetosPage() {
       ) : (
         <div className="editorial-card mt-10 rounded-3xl p-10 text-center">
           <p className="font-display text-lg font-semibold text-foreground">
-            Nenhum projeto encontrado
+            {projects.length === 0
+              ? "Nenhum projeto publicado ainda"
+              : "Nenhum projeto encontrado"}
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
-            Tente outro termo ou volte para todas as categorias.
+            {projects.length === 0
+              ? "Cadastre seus projetos reais no Painel ADM com seu e-mail e senha para que apareçam aqui automaticamente."
+              : "Tente outro termo ou volte para todas as categorias."}
           </p>
-          <button
-            type="button"
-            onClick={() => {
-              setSearch("");
-              setCategory("Todos");
-            }}
-            className="mt-5 rounded-full bg-primary px-5 py-2 text-xs font-semibold text-primary-foreground"
-          >
-            Limpar filtros
-          </button>
+          {projects.length === 0 ? (
+            <Link
+              to="/login"
+              className="btn-ocean mt-5 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-semibold"
+            >
+              <LockKeyhole className="h-3.5 w-3.5" />
+              Ir para o Painel ADM
+            </Link>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                setSearch("");
+                setCategory("Todos");
+              }}
+              className="mt-5 rounded-full bg-primary px-5 py-2 text-xs font-semibold text-primary-foreground"
+            >
+              Limpar filtros
+            </button>
+          )}
         </div>
       )}
 

@@ -1,7 +1,4 @@
 import annePortrait from "@/assets/anne-portrait.png";
-import projectDashboard from "@/assets/project-dashboard.png";
-import projectEcommerce from "@/assets/project-ecommerce.png";
-import projectTechEmpire from "@/assets/project-techempire.png";
 
 export const PROFILE = {
   name: "Anne Vitória",
@@ -23,10 +20,10 @@ export function whatsappHref(message?: string): string {
   return `https://wa.me/${PROFILE.whatsappDigits}?text=${encodeURIComponent(text)}`;
 }
 
-export const HERO_METRICS = [
-  { value: 15, suffix: "+", label: "projetos entregues" },
-  { value: 100, suffix: "%", label: "responsivo e otimizado" },
-  { value: 24, suffix: "h", label: "retorno médio no contato" },
+export const HERO_HIGHLIGHTS = [
+  { value: "100%", label: "responsivo em celular e desktop" },
+  { value: "Full Stack", label: "do banco de dados à interface" },
+  { value: "Remoto", label: "atendimento para todo o Brasil" },
 ] as const;
 
 export const TECH_MARQUEE = [
@@ -93,7 +90,7 @@ export const SERVICES: ServiceItem[] = [
 export interface ProjectItem {
   id: string;
   title: string;
-  category: "Sistemas Web" | "E-commerce" | "Sites Institucionais";
+  category: string;
   year: string;
   featured: boolean;
   image: string;
@@ -107,76 +104,79 @@ export interface ProjectItem {
   repoUrl?: string;
 }
 
-export const PROJECTS: ProjectItem[] = [
+export interface ArticleItem {
+  number: string;
+  category: string;
+  title: string;
+  excerpt: string;
+  fullText: string;
+  image: string;
+  imageAlt: string;
+  wide?: boolean;
+}
+
+export const ARTICLES: ArticleItem[] = [
   {
-    id: "dashboard-administrativo",
-    title: "Dashboard Administrativo",
-    category: "Sistemas Web",
-    year: "2026",
-    featured: true,
-    image: projectDashboard,
-    summary:
-      "Sistema web completo para gestão de indicadores em tempo real, relatórios automatizados e controle granular de permissões.",
-    clientOutcome:
-      "Centraliza vendas, clientes e métricas financeiras em uma única tela rápida, eliminando planilhas espalhadas.",
-    challenge:
-      "Equipes perdiam horas consolidando dados de vendas e pedidos manualmente antes de tomar decisões.",
-    solution:
-      "Interface reativa em React com gráficos dinâmicos, filtros por período, API REST em Node.js e consultas otimizadas em MySQL.",
-    stack: ["React", "TypeScript", "Node.js", "MySQL", "Tailwind CSS"],
-    highlights: [
-      "Indicadores financeiros em tempo real",
-      "Perfis de acesso por nível de usuário",
-      "Exportação rápida de relatórios",
-    ],
-    repoUrl: "https://github.com/Annevps",
+    number: "01",
+    category: "Inteligência Artificial",
+    title: "Inteligência artificial no dia a dia das pessoas",
+    excerpt:
+      "A inteligência artificial já faz parte dos estudos, do trabalho e de tarefas cotidianas, ajudando a organizar informações e encontrar novas possibilidades.",
+    fullText:
+      "A inteligência artificial está cada vez mais presente em atividades que fazem parte da nossa rotina. Ela pode ajudar nos estudos, organizar informações, responder perguntas e facilitar tarefas de trabalho. Além disso, ferramentas inteligentes estão sendo utilizadas em diferentes áreas, tornando alguns processos mais rápidos e acessíveis. Entender como essa tecnologia funciona é importante para utilizá-la com responsabilidade, criatividade e senso crítico, aproveitando seus recursos sem deixar de desenvolver nosso próprio conhecimento.",
+    image:
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Representação visual de inteligência artificial em uma interface digital",
   },
   {
-    id: "plataforma-ecommerce",
-    title: "Plataforma de E-commerce",
-    category: "E-commerce",
-    year: "2026",
-    featured: true,
-    image: projectEcommerce,
-    summary:
-      "Loja virtual sofisticada otimizada para conversão, com filtros inteligentes, carrinho lateral fluido e checkout simplificado.",
-    clientOutcome:
-      "Aumenta a confiança na compra pelo celular e reduz o abandono de carrinho com navegação instantânea.",
-    challenge:
-      "Lojas genéricas carregavam devagar no mobile e não valorizavam produtos de ticket mais alto.",
-    solution:
-      "Vitrine responsiva com busca sem recarregamento, controle de estoque integrado via API REST e foco total em performance.",
-    stack: ["TypeScript", "React", "CSS3", "API REST", "UI/UX"],
-    highlights: [
-      "Carrinho lateral sem trocar de página",
-      "Filtros por categoria e faixa de preço",
-      "SEO estruturado por produto",
-    ],
-    repoUrl: "https://github.com/Annevps",
+    number: "02",
+    category: "Segurança Digital",
+    title: "Segurança digital e golpes pelo WhatsApp",
+    excerpt:
+      "Proteger dados e reconhecer mensagens suspeitas são atitudes essenciais para usar aplicativos de conversa com mais tranquilidade.",
+    fullText:
+      "Com o aumento do uso da internet, proteger informações pessoais se tornou uma necessidade. Golpes digitais podem chegar por mensagens, links suspeitos e perfis falsos, inclusive em aplicativos de conversa. Por isso, é importante conferir a identidade de quem envia uma mensagem, evitar compartilhar códigos de acesso e utilizar senhas diferentes e seguras. Ativar a verificação em duas etapas também ajuda a preservar nossa privacidade e torna o uso da tecnologia mais seguro.",
+    image:
+      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Pessoa utilizando um celular e recursos de pagamento digital",
   },
   {
-    id: "tech-empire",
-    title: "Tech Empire",
-    category: "Sites Institucionais",
-    year: "2026",
-    featured: true,
-    image: projectTechEmpire,
-    summary:
-      "Portal corporativo de tecnologia com identidade visual marcante, apresentação de serviços, métricas de impacto e foco em captação de clientes.",
-    clientOutcome:
-      "Posiciona a marca com autoridade imediata, apresentando serviços e diferenciais com clareza em poucos segundos.",
-    challenge:
-      "Comunicar soluções tecnológicas complexas de forma direta, visualmente impactante e acessível em qualquer tela.",
-    solution:
-      "Arquitetura limpa com hierarquia tipográfica editorial, microinterações suaves e otimização completa para mecanismos de busca.",
-    stack: ["HTML5", "CSS3", "JavaScript", "SEO Técnico", "Design Responsivo"],
-    highlights: [
-      "Identidade visual autoral em modo escuro",
-      "Estrutura otimizada para Google",
-      "Navegação fluida em desktop e celular",
-    ],
-    liveUrl: "https://github.com/Annevps/minhapagina",
-    repoUrl: "https://github.com/Annevps",
+    number: "03",
+    category: "Mercado de Trabalho",
+    title: "Carreiras de tecnologia que estão crescendo",
+    excerpt:
+      "Desenvolvimento de software, dados e segurança digital são algumas das áreas que oferecem caminhos para quem gosta de resolver problemas.",
+    fullText:
+      "A área de tecnologia oferece diferentes caminhos para quem gosta de aprender, resolver problemas e criar soluções. Desenvolvimento de software, análise de dados, segurança digital e inteligência artificial são exemplos de campos que despertam interesse. Para acompanhar essas mudanças, é importante desenvolver conhecimentos técnicos, praticar a programação e aprender a trabalhar em equipe. Curiosidade, dedicação e disposição para aprender fazem parte da construção de uma trajetória profissional nessa área.",
+    image:
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Computador com editor de código em uma estação de trabalho",
+  },
+  {
+    number: "04",
+    category: "Desenvolvimento Regional",
+    title: "Tecnologia no campo e no agronegócio do Vale do Mucuri",
+    excerpt:
+      "Ferramentas digitais podem apoiar produtores, melhorar o acompanhamento das atividades rurais e contribuir para o desenvolvimento regional.",
+    fullText:
+      "A tecnologia também tem um papel importante no desenvolvimento das regiões rurais. No Vale do Mucuri, soluções digitais podem contribuir para melhorar atividades do campo, facilitar o acompanhamento das plantações e apoiar decisões dos produtores. Sensores, sistemas de monitoramento, aplicativos e ferramentas de gestão são exemplos de recursos que podem tornar o trabalho mais organizado e eficiente. A inovação também pode gerar oportunidades, conhecimento e desenvolvimento para a nossa região.",
+    image:
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=85",
+    imageAlt: "Paisagem de área agrícola ao entardecer",
+    wide: true,
+  },
+  {
+    number: "05",
+    category: "Tecnologia Sustentável",
+    title: "Sustentabilidade e lixo eletrônico",
+    excerpt:
+      "O descarte correto, a reciclagem e a manutenção dos equipamentos ajudam a reduzir impactos ambientais causados pelo lixo eletrônico.",
+    fullText:
+      "O avanço da tecnologia também traz uma responsabilidade: pensar no destino dos equipamentos que deixam de ser utilizados. Celulares, computadores, baterias e outros componentes não devem ser descartados junto ao lixo comum. O descarte em pontos de coleta apropriados permite que parte desses materiais seja encaminhada para reciclagem. Cuidar dos equipamentos, realizar manutenção e prolongar sua vida útil são atitudes que ajudam a construir uma relação mais consciente e sustentável com a tecnologia.",
+    image:
+      "https://images.unsplash.com/photo-1605600659873-d808a13e4d9a?auto=format&fit=crop&w=1200&q=85",
+    imageAlt: "Equipamentos eletrônicos e componentes destinados à reciclagem",
+    wide: true,
   },
 ];
 
@@ -240,29 +240,6 @@ export const SKILL_GROUPS: SkillGroup[] = [
     ],
   },
 ];
-
-export const WORK_PILLARS = [
-  {
-    title: "Você fala direto com quem programa",
-    description:
-      "Do primeiro alinhamento à publicação final, você conversa diretamente comigo — sem intermediários distorcendo o seu pedido.",
-  },
-  {
-    title: "Código limpo e propriedade sua",
-    description:
-      "Domínio, hospedagem e código organizado ficam no seu nome. Nada de soluções presas a plataformas engessadas.",
-  },
-  {
-    title: "Pensado para o Google e para o celular",
-    description:
-      "Estrutura semântica, carregamento leve e layout adaptado para telas pequenas, onde está a maior parte dos seus clientes.",
-  },
-  {
-    title: "Acompanhamento após o lançamento",
-    description:
-      "Atendimento remoto para todo o Brasil com suporte próximo para evoluir o projeto conforme o seu negócio cresce.",
-  },
-] as const;
 
 export const FAQS = [
   {

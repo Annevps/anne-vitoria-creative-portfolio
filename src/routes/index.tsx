@@ -1,23 +1,29 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, ChevronDown, MessageCircle } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BookOpen,
+  ChevronDown,
+  Lightbulb,
+  LockKeyhole,
+  MessageCircle,
+} from "lucide-react";
 import { useState } from "react";
 import { CodeShowcase } from "@/components/CodeShowcase";
 import {
-  AnimatedCounter,
   Reveal,
   StaggerGroup,
   StaggerItem,
 } from "@/components/MotionPrimitives";
 import {
+  ARTICLES,
   FAQS,
-  HERO_METRICS,
+  HERO_HIGHLIGHTS,
   PROFILE,
-  PROJECTS,
   SERVICES,
   TECH_MARQUEE,
-  WORK_PILLARS,
   whatsappHref,
 } from "@/data/portfolio";
 import { fetchPortfolioProjects } from "@/lib/remoteProjects";
@@ -46,20 +52,28 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const { data } = useQuery({
+  const [openArticle, setOpenArticle] = useState<string | null>(null);
+  const { data, isLoading } = useQuery({
     queryKey: ["portfolio-projects"],
     queryFn: fetchPortfolioProjects,
-    initialData: { projects: PROJECTS, syncedCount: 0 },
     staleTime: 1000 * 60 * 5,
   });
 
-  const featuredProjects = data.projects.slice(0, 3);
+  const featuredProjects = (data?.projects ?? []).slice(0, 3);
 
   return (
     <div className="overflow-x-clip">
       {/* HERO — Identidade autoral Azul Petróleo & Ciano da Anne */}
       <section className="hero-petrol relative overflow-hidden">
         <div className="bg-cyan-grid pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" />
+        <div
+          aria-hidden="true"
+          className="animate-orb pointer-events-none absolute -top-24 right-10 h-72 w-72 rounded-full bg-cyan-glow/15 blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="animate-orb pointer-events-none absolute -bottom-24 left-8 h-64 w-64 rounded-full bg-mint/10 blur-3xl"
+        />
         <div className="relative mx-auto max-w-6xl px-4 pt-14 pb-20 sm:px-6 md:pt-20 md:pb-24">
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
             {/* Coluna esquerda: Apresentação autoral */}
@@ -109,13 +123,13 @@ function HomePage() {
                 </a>
               </div>
 
-              <div className="mt-10 grid grid-cols-3 gap-6 border-t border-cyan-glow/15 pt-7">
-                {HERO_METRICS.map((metric) => (
-                  <div key={metric.label}>
-                    <p className="font-display text-2xl font-bold text-hero-foreground sm:text-3xl">
-                      <AnimatedCounter value={metric.value} suffix={metric.suffix} />
+              <div className="mt-10 grid grid-cols-1 gap-5 border-t border-cyan-glow/15 pt-7 sm:grid-cols-3 sm:gap-6">
+                {HERO_HIGHLIGHTS.map((item) => (
+                  <div key={item.label}>
+                    <p className="font-display text-xl font-bold text-cyan-glow sm:text-2xl">
+                      {item.value}
                     </p>
-                    <p className="mt-1 text-xs text-hero-muted sm:text-sm">{metric.label}</p>
+                    <p className="mt-1 text-xs text-hero-muted sm:text-sm">{item.label}</p>
                   </div>
                 ))}
               </div>
@@ -281,51 +295,180 @@ function HomePage() {
             </Link>
           </Reveal>
 
-          <StaggerGroup className="mt-10 grid gap-6 md:grid-cols-3">
-            {featuredProjects.map((project) => (
-              <StaggerItem key={project.id}>
-                <Link
-                  to="/projetos"
-                  className="editorial-card group flex h-full flex-col overflow-hidden rounded-3xl"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden bg-hero">
-                    <img
-                      src={project.image}
-                      alt={`Prévia do projeto ${project.title}`}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <span className="absolute top-3 left-3 rounded-full bg-hero/85 px-3 py-1 font-mono text-[11px] text-cyan-glow backdrop-blur-md">
-                      {project.category}
-                    </span>
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <h3 className="font-display text-lg font-bold text-foreground transition-colors group-hover:text-primary">
-                      {project.title}
-                    </h3>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                      {project.summary}
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-1.5">
-                      {project.stack.slice(0, 3).map((tech) => (
-                        <span
-                          key={tech}
-                          className="rounded-md bg-secondary px-2 py-0.5 font-mono text-[11px] text-secondary-foreground"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+          {isLoading ? (
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              {[1, 2, 3].map((slot) => (
+                <div key={slot} className="editorial-card h-72 animate-pulse rounded-3xl p-6" />
+              ))}
+            </div>
+          ) : featuredProjects.length > 0 ? (
+            <StaggerGroup className="mt-10 grid gap-6 md:grid-cols-3">
+              {featuredProjects.map((project) => (
+                <StaggerItem key={project.id}>
+                  <Link
+                    to="/projetos"
+                    className="editorial-card group flex h-full flex-col overflow-hidden rounded-3xl"
+                  >
+                    <div className="relative aspect-[16/10] overflow-hidden bg-hero">
+                      <img
+                        src={project.image}
+                        alt={`Prévia do projeto ${project.title}`}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <span className="absolute top-3 left-3 rounded-full bg-hero/85 px-3 py-1 font-mono text-[11px] text-cyan-glow backdrop-blur-md">
+                        {project.category}
+                      </span>
                     </div>
-                  </div>
-                </Link>
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
+                    <div className="flex flex-1 flex-col p-6">
+                      <h3 className="font-display text-lg font-bold text-foreground transition-colors group-hover:text-primary">
+                        {project.title}
+                      </h3>
+                      <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                        {project.summary}
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        {project.stack.slice(0, 3).map((tech) => (
+                          <span
+                            key={tech}
+                            className="rounded-md bg-secondary px-2 py-0.5 font-mono text-[11px] text-secondary-foreground"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </Link>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          ) : (
+            <div className="editorial-card mt-10 flex flex-col items-center rounded-3xl p-10 text-center">
+              <p className="font-display text-xl font-bold text-foreground">
+                Projetos reais conectados ao seu Painel ADM
+              </p>
+              <p className="mt-2 max-w-lg text-sm text-muted-foreground">
+                Nenhum projeto publicado ainda. Entre no Painel ADM para cadastrar e publicar seus
+                projetos reais diretamente no banco de dados.
+              </p>
+              <Link
+                to="/login"
+                className="btn-ocean mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"
+              >
+                <LockKeyhole className="h-4 w-4" />
+                Acessar Painel ADM
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
+      {/* MEUS ARTIGOS — 5 conteúdos originais sobre tecnologia */}
+      <section id="artigos" className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <Reveal className="max-w-2xl">
+            <p className="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-widest text-primary">
+              <BookOpen className="h-3.5 w-3.5" />
+              Artigos e conteúdos
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl">
+              Meus <span className="text-primary">Artigos</span>
+            </h2>
+            <p className="mt-3 text-base text-muted-foreground">
+              Confira alguns dos meus conteúdos sobre tecnologia, desenvolvimento e inovações do
+              mundo digital.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.08}>
+            <aside className="featured-petrol-card flex items-center gap-4 rounded-2xl px-5 py-4">
+              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-glow/15 text-cyan-glow">
+                <Lightbulb className="h-5 w-5" />
+              </span>
+              <div>
+                <p className="font-display text-sm font-bold text-hero-foreground">
+                  Aprender, compartilhar e evoluir sempre!
+                </p>
+                <p className="font-mono text-[11px] text-cyan-glow">&lt;/&gt; 5 temas essenciais</p>
+              </div>
+            </aside>
+          </Reveal>
+        </div>
+
+        <StaggerGroup className="mt-10 grid gap-6 md:grid-cols-6">
+          {ARTICLES.map((article) => {
+            const isOpen = openArticle === article.number;
+            return (
+              <StaggerItem
+                key={article.number}
+                className={article.wide ? "md:col-span-3" : "md:col-span-2"}
+              >
+                <article className="editorial-card group flex h-full flex-col overflow-hidden rounded-3xl">
+                  <div className="relative aspect-[16/10] overflow-hidden bg-hero">
+                    <img
+                      src={article.image}
+                      alt={article.imageAlt}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <span className="absolute top-3 left-3 rounded-full bg-hero/85 px-2.5 py-1 font-mono text-[11px] font-semibold text-cyan-glow backdrop-blur-md">
+                      {article.number}
+                    </span>
+                    <span className="absolute right-3 bottom-3 rounded-full bg-hero/85 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-hero-foreground backdrop-blur-md">
+                      {article.category}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="font-display text-lg font-bold leading-snug text-foreground">
+                      {article.title}
+                    </h3>
+                    <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
+                      {article.excerpt}
+                    </p>
+
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.28 }}
+                          className="overflow-hidden"
+                        >
+                          <p className="mt-4 border-t border-border pt-4 text-sm leading-relaxed text-foreground/90">
+                            {article.fullText}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    <div className="mt-auto pt-5">
+                      <button
+                        type="button"
+                        onClick={() => setOpenArticle(isOpen ? null : article.number)}
+                        aria-expanded={isOpen}
+                        className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-primary transition-colors hover:text-foreground"
+                      >
+                        {isOpen ? "Recolher artigo" : "Ler artigo completo"}
+                        <ArrowRight
+                          className={`h-3.5 w-3.5 transition-transform duration-200 ${
+                            isOpen ? "-rotate-90" : ""
+                          }`}
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              </StaggerItem>
+            );
+          })}
+        </StaggerGroup>
+      </section>
+
       {/* ENGENHARIA & CÓDIGO */}
-      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <section className="border-t border-border bg-surface/50 py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <Reveal className="mb-10 text-center">
           <p className="font-mono text-xs font-semibold uppercase tracking-widest text-primary">
             Por baixo dos panos
@@ -337,34 +480,7 @@ function HomePage() {
         <Reveal>
           <CodeShowcase />
         </Reveal>
-      </section>
-
-      {/* COMO EU TRABALHO */}
-      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <Reveal className="max-w-2xl">
-          <p className="font-mono text-xs font-semibold uppercase tracking-widest text-primary">
-            Como eu trabalho
-          </p>
-          <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl">
-            Compromisso do planejamento ao suporte
-          </h2>
-        </Reveal>
-
-        <StaggerGroup className="mt-10 grid gap-5 sm:grid-cols-2">
-          {WORK_PILLARS.map((pillar, idx) => (
-            <StaggerItem key={pillar.title}>
-              <div className="editorial-card h-full rounded-2xl p-6">
-                <span className="font-mono text-xs font-semibold text-primary">0{idx + 1}</span>
-                <h3 className="mt-2 font-display text-lg font-bold text-foreground">
-                  {pillar.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {pillar.description}
-                </p>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerGroup>
+        </div>
       </section>
 
       {/* FAQ */}

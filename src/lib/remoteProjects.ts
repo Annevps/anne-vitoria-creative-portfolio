@@ -1,8 +1,6 @@
-import { PROJECTS, type ProjectItem } from "@/data/portfolio";
-
-const SUPABASE_URL = "https://mezafzsrxzgryefprblh.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_TDk-7FqEPphaWB30qkjMGw_BvHMr1vu";
-const BUCKET_IMAGENS = "projetos-imagens";
+import projectFallback from "@/assets/project-techempire.png";
+import { type ProjectItem } from "@/data/portfolio";
+import { ANNE_BUCKET_IMAGENS, ANNE_SUPABASE_KEY, ANNE_SUPABASE_URL } from "@/lib/anneSupabase";
 
 interface RawRemoteProject {
   id: number;
@@ -23,46 +21,36 @@ interface RawRemoteProject {
   destaque?: boolean | null;
 }
 
-function mapCategory(raw?: string | null): ProjectItem["category"] {
-  const value = (raw ?? "").toLowerCase();
-  if (value.includes("commerce") || value.includes("loja")) return "E-commerce";
-  if (value.includes("sistema") || value.includes("dashboard") || value.includes("app")) {
-    return "Sistemas Web";
-  }
-  return "Sites Institucionais";
-}
-
 export async function fetchPortfolioProjects(): Promise<{
   projects: ProjectItem[];
   syncedCount: number;
 }> {
   try {
     const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/projetos?select=*&publicado=eq.true&order=ordem.asc,criado_em.desc`,
+      `${ANNE_SUPABASE_URL}/rest/v1/projetos?select=*&publicado=eq.true&order=ordem.asc,criado_em.desc`,
       {
         headers: {
-          apikey: SUPABASE_PUBLISHABLE_KEY,
+          apikey: ANNE_SUPABASE_KEY,
         },
       },
     );
-    if (!response.ok) return { projects: PROJECTS, syncedCount: 0 };
+    if (!response.ok) return { projects: [], syncedCount: 0 };
 
     const rows = (await response.json()) as RawRemoteProject[];
     if (!Array.isArray(rows) || rows.length === 0) {
-      return { projects: PROJECTS, syncedCount: 0 };
+      return { projects: [], syncedCount: 0 };
     }
 
-    const fallbackImage = PROJECTS[2]?.image ?? PROJECTS[0]?.image ?? "";
     const mapped: ProjectItem[] = rows
       .filter((row) => row.titulo && !/^teste(\s*\d*)?$/i.test(row.titulo.trim()))
       .map((row) => {
         const imgUrl = row.imagem_path
-          ? `${SUPABASE_URL}/storage/v1/object/public/${BUCKET_IMAGENS}/${row.imagem_path}`
-          : fallbackImage;
+          ? `${ANNE_SUPABASE_URL}/storage/v1/object/public/${ANNE_BUCKET_IMAGENS}/${row.imagem_path}`
+          : projectFallback;
         const item: ProjectItem = {
           id: `db-${row.id}`,
           title: row.titulo?.trim() || "Projeto",
-          category: mapCategory(row.categoria),
+          category: row.categoria?.trim() || "Desenvolvimento Web",
           year: row.ano ? String(row.ano) : "2026",
           featured: Boolean(row.destaque),
           image: imgUrl,
@@ -92,9 +80,8 @@ export async function fetchPortfolioProjects(): Promise<{
         return item;
       });
 
-    const merged = [...mapped, ...PROJECTS];
-    return { projects: merged, syncedCount: mapped.length };
+    return { projects: mapped, syncedCount: mapped.length };
   } catch {
-    return { projects: PROJECTS, syncedCount: 0 };
+    return { projects: [], syncedCount: 0 };
   }
 }

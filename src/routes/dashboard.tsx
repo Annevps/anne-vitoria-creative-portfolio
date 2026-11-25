@@ -35,6 +35,7 @@ interface DbProject {
   categoria: string | null;
   github_url: string | null;
   destaque: boolean | null;
+  publicado?: boolean | null;
   imagem_path: string | null;
   atualizado_em: string | null;
 }
@@ -257,6 +258,20 @@ function DashboardPage() {
     }
     if (editingId === project.id) resetForm();
     toast.success("Projeto excluído.");
+    await loadProjects();
+  };
+
+  const togglePublished = async (project: DbProject) => {
+    const nextState = !project.publicado;
+    const { error } = await anneDb
+      .from("projetos")
+      .update({ publicado: nextState })
+      .eq("id", project.id);
+    if (error) {
+      toast.error("Não foi possível alterar o status de publicação.");
+      return;
+    }
+    toast.success(nextState ? "Projeto publicado no portfólio!" : "Projeto movido para rascunho.");
     await loadProjects();
   };
 
@@ -527,6 +542,17 @@ function DashboardPage() {
                         </p>
                       </div>
                       <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => togglePublished(proj)}
+                          className={`inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
+                            proj.publicado
+                              ? "border-primary/40 bg-secondary text-primary hover:bg-secondary/70"
+                              : "border-border text-muted-foreground hover:border-primary hover:text-primary"
+                          }`}
+                        >
+                          {proj.publicado ? "Publicado" : "Publicar"}
+                        </button>
                         <button
                           type="button"
                           onClick={() => startEdit(proj)}
