@@ -1,14 +1,19 @@
-# Welcome to your Lovable project
+# Anne Vitoria Creative Portfolio
+
+as habilidades estao no index e no sobre. oq eu quero é mudar o meu site pois ele nao esta nada proissional, esse é o site de referencia https://andredev.nexialabs.com.br/
+quero nesse nivel profissional, com muitas animaçoes, seo e responsivo, meu site parece que uma criança que fez, nenhum cliente iria contratar meus serviços veno esse site meu ]
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://anne-vitoria-creative-portfolio.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/392a4906-cf41-487e-ba34-ce597578802c).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +25,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
