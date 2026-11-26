@@ -12,7 +12,7 @@ export const Route = createFileRoute("/habilidades")({
       {
         name: "description",
         content:
-          "Conheça a stack completa de Anne Vitória: React, TypeScript, Node.js, Python, MySQL, PostgreSQL, UI/UX responsivo e SEO técnico.",
+          "Conheça as habilidades técnicas e interpessoais de Anne Vitória: HTML, CSS, JavaScript, React, Node.js, Python, MySQL, Excel, Word, hardware, software e comunicação ativa.",
       },
       { property: "og:title", content: "Habilidades Técnicas | Anne Vitória" },
       {
@@ -67,9 +67,9 @@ function HabilidadesPage() {
               Habilidades de <span className="text-cyan-glow">ponta a ponta</span>.
             </h1>
             <p className="mt-5 text-base leading-relaxed text-hero-muted sm:text-lg">
-              Atuo em todas as camadas do desenvolvimento web — HTML5, CSS3, JavaScript,
-              TypeScript, React, Node.js, Python e MySQL — unindo arquitetura limpa a interfaces
-              modernas e otimizadas para o Google.
+              Uno desenvolvimento web — HTML5, CSS3, JavaScript, TypeScript, React, Node.js,
+              Python e MySQL — com domínio de Excel, Word, hardware, software e comunicação ativa
+              para entregar projetos organizados e claros.
             </p>
           </Reveal>
         </div>

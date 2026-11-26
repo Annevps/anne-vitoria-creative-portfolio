@@ -40,8 +40,10 @@ export const TECH_MARQUEE = [
   "APIs REST",
   "UI/UX Design",
   "SEO Técnico",
+  "Excel & Word",
+  "Comunicação Ativa",
+  "Hardware & Software",
   "Git & GitHub",
-  "Framer Motion",
 ] as const;
 
 export interface ServiceItem {
