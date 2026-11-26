@@ -19,7 +19,7 @@ const NAV_LINKS = [
   { to: "/" as const, label: "Início", hint: "Página principal" },
   { to: "/habilidades" as const, label: "Habilidades", hint: "Stack técnica e processo" },
   { to: "/projetos" as const, label: "Projetos", hint: "Portfólio interativo" },
-  { to: "/sobre" as const, label: "Sobre", hint: "Trajetória e valores" },
+  { to: "/sobre" as const, label: "Quem sou eu", hint: "História, estudos e objetivos" },
   { to: "/contato" as const, label: "Contato", hint: "WhatsApp, e-mail e orçamento" },
 ];
 
@@ -69,6 +69,10 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       project.category.toLowerCase().includes(normalized) ||
       project.stack.some((tech) => tech.toLowerCase().includes(normalized)),
   );
+
+  if (pathname === "/login" || pathname === "/dashboard") {
+    return <>{children}</>;
+  }
 
   return (
     <div className="relative flex min-h-screen flex-col bg-background text-foreground">

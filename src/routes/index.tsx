@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { CodeShowcase } from "@/components/CodeShowcase";
+import { ProgrammerReferences } from "@/components/ProgrammerReferences";
 import {
   Reveal,
   StaggerGroup,
@@ -362,6 +363,8 @@ function HomePage() {
           )}
         </div>
       </section>
+
+      <ProgrammerReferences />
 
       {/* MEUS ARTIGOS — 5 conteúdos originais sobre tecnologia */}
       <section id="artigos" className="mx-auto max-w-6xl px-4 py-20 sm:px-6">

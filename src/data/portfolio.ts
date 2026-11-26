@@ -180,8 +180,41 @@ export const ARTICLES: ArticleItem[] = [
   },
 ];
 
+export const PROGRAMMER_REFERENCES = [
+  {
+    name: "Linus Torvalds",
+    country: "Finlândia",
+    specialty: "Sistemas e código aberto",
+    contribution:
+      "Criou o Linux e o Git, duas tecnologias que transformaram a forma de desenvolver, versionar e compartilhar software no mundo inteiro.",
+    lesson: "Construir fundamentos sólidos e colaborar com a comunidade.",
+    image: "https://github.com/torvalds.png",
+    profileUrl: "https://github.com/torvalds",
+  },
+  {
+    name: "Evan You",
+    country: "China",
+    specialty: "Interfaces e ferramentas web",
+    contribution:
+      "Criou o Vue.js e o Vite, ferramentas que tornam o desenvolvimento de interfaces e aplicações web mais produtivo e acessível.",
+    lesson: "Simplificar processos também é uma forma de inovar.",
+    image: "https://github.com/yyx990803.png",
+    profileUrl: "https://github.com/yyx990803",
+  },
+  {
+    name: "José Valim",
+    country: "Brasil",
+    specialty: "Linguagens e sistemas escaláveis",
+    contribution:
+      "Criou a linguagem Elixir, usada em aplicações que precisam lidar com muitas operações simultâneas e alta disponibilidade.",
+    lesson: "Conhecimento e dedicação podem gerar tecnologia de alcance global.",
+    image: "https://github.com/josevalim.png",
+    profileUrl: "https://github.com/josevalim",
+  },
+] as const;
+
 export interface SkillGroup {
-  id: "frontend" | "backend" | "database" | "ux-seo";
+  id: "frontend" | "backend" | "database" | "ux-seo" | "tools";
   label: string;
   headline: string;
   description: string;
@@ -237,6 +270,19 @@ export const SKILL_GROUPS: SkillGroup[] = [
       { name: "UI/UX & Design Responsivo", level: 94, detail: "Hierarquia visual, contraste e experiência mobile-first" },
       { name: "SEO Técnico & Semântica", level: 91, detail: "Metatags, Open Graph, dados estruturados e headings limpos" },
       { name: "Performance Web", level: 90, detail: "Carregamento ágil, imagens otimizadas e código enxuto" },
+    ],
+  },
+  {
+    id: "tools",
+    label: "Ferramentas & Pessoas",
+    headline: "Organização, comunicação e suporte ao trabalho",
+    description:
+      "Tecnologia também envolve ouvir com atenção, organizar informações e dominar ferramentas que apoiam uma rotina produtiva.",
+    skills: [
+      { name: "Excel", level: 86, detail: "Organização de dados, planilhas e acompanhamento de informações" },
+      { name: "Comunicação ativa", level: 94, detail: "Escuta atenta, troca clara de ideias e entendimento das necessidades" },
+      { name: "Word & Documentação", level: 88, detail: "Produção e organização de documentos, textos e materiais de apoio" },
+      { name: "Hardware & Software", level: 84, detail: "Noções de instalação, configuração, manutenção e uso de recursos computacionais" },
     ],
   },
 ];
